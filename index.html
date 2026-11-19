@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9f7ef">
+  <meta name="description" content="Trò chơi cân thăng bằng và thay thế bằng hình ảnh dành cho bé 5–6 tuổi.">
+  <title>Cân vui ⚖️ Bé học thay thế</title>
+  <style>
+    :root {--ink:#283f45;--muted:#627781;--white:#fff;--paper:#f9f7ef;--outline:#e0e9df;--green:#168570;--gold:#e8ab43;--shadow:0 10px 32px rgba(49,81,67,.085)}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(circle at 10% 5%,#e7f6ed,transparent 36%),radial-gradient(circle at 95% 7%,#fff0dc,transparent 32%),var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+    button{font:inherit;cursor:pointer;touch-action:manipulation} button:focus-visible{outline:4px solid #edac46;outline-offset:3px}
+    button:disabled{opacity:.45;cursor:not-allowed} [hidden]{display:none!important} .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .app{max-width:920px;margin:auto;padding:17px 17px 40px} header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 2px 17px}
+    .logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900;letter-spacing:-.04em}.logo-mark{background:#e1f5e6;border-radius:16px;padding:9px;font-size:28px}
+    .head-controls{display:flex;gap:9px;align-items:center}.icon-button,.parent-button{border:1.5px solid #dfe9e2;background:var(--white);border-radius:16px;min-height:48px;padding:10px 15px;box-shadow:0 3px 0 #d8e6db;font-weight:800;color:#325b59}.icon-button{font-size:23px;padding:7px 14px}.parent-button{font-size:14px}
+    .progress{display:flex;align-items:center;justify-content:center;gap:12px;margin:3px 0 16px}.dot{width:34px;height:34px;border:1.5px solid #d9e7da;background:#fff;border-radius:12px;font-weight:850;color:#66867b}
+    .dot.active{background:#167f70;color:white;border-color:#167f70;box-shadow:0 3px 0 #0e665a}.dot.done:not(.active){background:#dff6dc;border-color:#bce6bb;color:#16754d}
+    .card{background:white;border:1.5px solid var(--outline);border-radius:26px;padding:19px;box-shadow:var(--shadow)}
+    .section-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.section-emoji{font-size:29px;line-height:1}
+    .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fact{appearance:none;background:#f5faf6;border:2px solid #e2eee4;border-radius:22px;min-height:123px;display:grid;place-content:center;gap:4px;padding:10px 5px;width:100%;transition:transform .2s,background .2s}
+    .fact:active{transform:scale(.98)}.fact.swapped{background:#f7f0ff;border-color:#dfd2f7}.equation{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:6px;min-width:0}.equal{color:#e5a04e;font-size:28px;font-weight:950;flex:none}
+    .objects{display:flex;flex-wrap:wrap;align-content:center;align-items:center;justify-content:center;gap:1px;max-width:190px;min-width:0}.object{font-size:clamp(26px,4vw,38px);line-height:1.15;display:inline-block;filter:drop-shadow(0 2px 2px #0001)}.fact .object{font-size:clamp(26px,3.7vw,37px)}
+    .fact .swap{font-size:20px;color:#7a9f98;line-height:1}.fact.swapped .swap{color:#9275bd}
+    .game{margin-top:17px}.game-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .hint-toggle{background:#fff5d9;border:1.5px solid #ecd69f;border-radius:15px;padding:9px 14px;font-size:23px;min-height:48px;min-width:55px}
+    .visual-question{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 8px;min-height:91px;background:#fffbf0;border:2px dashed #f0e1b5;border-radius:24px;padding:14px 10px;width:100%}
+    .visual-question .object{font-size:clamp(42px,8vw,62px)}.q-mark{border:2px solid #edc872;border-radius:14px;padding:4px 12px;background:white;color:#e39c35;font-weight:950;font-size:38px;min-width:51px;text-align:center}
+    .visual-question .equal{font-size:35px}
+    .tutorial{background:#fcf9ec;border:1.5px dashed #e7d6ab;border-radius:22px;padding:12px 12px 15px;margin:12px 0}
+    .tutorial-tools{display:flex;align-items:center;justify-content:space-between;gap:8px}.round{background:white;border:1.5px solid #dfd9bf;border-radius:14px;min-width:45px;min-height:43px;font-size:22px;color:#577668}.stage-counter{font-weight:900;color:#9a7743;font-size:15px}
+    .tutorial-scene{display:grid;place-items:center;min-height:137px;overflow:hidden}.scene-equation{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;animation:appear .4s ease-out}.scene-equation .objects{max-width:350px}.scene-equation .object{font-size:clamp(32px,5.8vw,46px)}
+    .scene-split{width:100%;animation:appear .5s ease}.split-row{display:grid;grid-template-columns:1fr 27px 1fr;align-items:center;gap:5px}.split-side{display:grid;grid-template-columns:repeat(var(--parts),minmax(0,1fr));gap:5px}.split-group{min-height:75px;display:flex;align-items:center;justify-content:center;gap:0;background:#fff;border:2px solid #e9cc99;border-radius:16px;padding:5px 2px;animation:fan-out .6s both;animation-delay:calc(var(--group) * 120ms)}.split-side.left .split-group{border-color:#b7dfca;background:#edf9f1}.split-group .object{font-size:clamp(22px,4vw,33px)}.split-symbol{font-size:25px;color:#e4a64d;font-weight:950;text-align:center}.split-focus{box-shadow:0 0 0 4px #f4d37e;border-color:#deb15d!important}
+    .scale-board{height:290px;border-radius:25px;background:linear-gradient(145deg,#e8f5ff,#f5fbfb 55%,#fff5df);position:relative;isolation:isolate;overflow:hidden}
+    .scale-board:after{content:"";position:absolute;bottom:0;left:0;right:0;height:37px;background:#e8f0dc;border-top:2px solid #d3e3d2;z-index:-1}
+    .scale{position:absolute;inset:8px 0 26px}.post{position:absolute;left:calc(50% - 7px);width:14px;height:183px;bottom:0;border-radius:15px;background:linear-gradient(90deg,#d9a276,#a46b4b)}.post:after{content:"";position:absolute;width:100px;height:17px;border-radius:15px;background:#c68d6a;bottom:-5px;left:50%;transform:translateX(-50%)}
+    .beam{position:absolute;left:7%;width:86%;height:11px;top:77px;border-radius:15px;background:#b88a63;box-shadow:0 3px 0 #986b4e;transform:rotate(var(--tilt,-9deg));transform-origin:center;transition:transform .62s cubic-bezier(.2,1,.24,1);z-index:2}.pivot{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:33px;height:33px;border-radius:50%;border:7px solid #f9c96f;background:#93614c;z-index:3}
+    .hanger{position:absolute;top:7px;width:41%;height:160px;display:flex;align-items:center;flex-direction:column}.hanger.left{left:-1%}.hanger.right{right:-1%}.rope{height:40px;width:3px;flex:none;background:#a77a58}
+    .pan{width:100%;max-width:235px;min-height:94px;height:94px;background:#fffdf4;border:4px solid #ae7953;border-top:0;border-radius:8px 8px 30px 30px;box-shadow:0 5px 0 #cea27b;display:flex;flex-wrap:wrap;align-items:center;align-content:center;justify-content:center;gap:0;padding:9px 4px;position:relative;transform:rotate(calc(-1 * var(--tilt,-9deg)));transition:transform .62s cubic-bezier(.2,1,.24,1)}.pan:before{content:"";position:absolute;top:-6px;left:-5px;right:-5px;height:8px;border-radius:9px;background:#af7950}
+    .pan .object{font-size:clamp(29px,5.4vw,43px)}.pan .removable{background:none;border:0;padding:0;border-radius:9px;line-height:1;min-width:33px;min-height:37px}.pan .removable:active{background:#ffe1c9}.pan .empty{font-size:48px;color:#d9d4be}
+    .balance-badge{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);border-radius:99px;padding:4px 18px;font-size:26px;background:#fff;border:1px solid #dbe8dd;box-shadow:0 2px 8px #0001;white-space:nowrap}.balance-badge.balanced{background:#e3f8e3}
+    .controls{display:flex;align-items:stretch;gap:12px;margin-top:13px}.add{display:flex;align-items:center;justify-content:center;gap:13px;flex:1;background:#ffdf9a;border:2px solid #e9b85d;border-radius:22px;min-height:84px;box-shadow:0 4px 0 #d9ab5a}.add .object{font-size:48px}.add .plus{font-size:35px;font-weight:900;color:#ad6c27}.mini-controls{display:flex;gap:9px}.mini-controls button{background:#f7f9f7;border:1.5px solid #e0e7dd;border-radius:19px;min-width:65px;min-height:76px;font-weight:900;font-size:31px;color:#537368}
+    .feedback{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0}
+    .overlay{position:fixed;inset:0;background:#173638a8;z-index:20;display:grid;place-items:center;padding:16px;overflow:auto}.dialog{background:#fff;border-radius:29px;box-shadow:0 16px 80px #112a3433;width:min(680px,100%);max-height:min(90vh,900px);overflow:auto;padding:22px}.dialog-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.dialog-header h2{font-size:22px;margin:0}.close{border:1px solid #e0e9e0;background:#f9faf8;border-radius:13px;font-size:25px;width:48px;height:48px}
+    .parent-text{font-size:15px;line-height:1.6;color:#415b61}.guide{border:1.5px solid #e4eee3;border-radius:18px;background:#f6faf6;padding:13px 15px;margin:10px 0 19px}.guide p{margin:5px 0}.parent-step{border:1.5px solid #e4e8e1;border-radius:18px;padding:13px;margin:9px 0;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start}.step-number{display:grid;place-items:center;background:#dbf1e8;border-radius:11px;width:32px;height:32px;font-weight:900;color:#136b5b}.parent-step p{margin:0 0 10px;color:#435f62;font-size:14px;line-height:1.55}.parent-step .scene-equation .object{font-size:31px}.parent-step .scene-split .object{font-size:26px}.parent-step .split-group{min-height:60px}.parent-step .scene-equation{justify-content:flex-start}
+    .parent-footer{font-size:13px;color:#6b7e82;line-height:1.5;border-top:1px solid #e8eee8;padding-top:12px;margin-top:18px}
+    .success-dialog{text-align:center;width:min(390px,100%);padding:25px}.success-icon{font-size:69px;animation:pop .5s ease}.success-equation{display:flex;align-items:center;justify-content:center;gap:9px;margin:22px 0}.success-equation .object{font-size:43px}.success-equation .equal{font-size:36px}.next{border:0;border-radius:20px;background:var(--green);color:white;font-size:32px;min-width:130px;min-height:65px;box-shadow:0 5px 0 #076e5d}
+    footer{text-align:center;color:#8a9895;font-size:12px;margin:22px 0 0}
+    @keyframes appear{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:scale(1)}} @keyframes fan-out{from{opacity:.25;transform:translateX(calc(var(--shift) * -22px)) scale(.88)}to{opacity:1;transform:translateX(0) scale(1)}} @keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+    @media(max-width:600px){.app{padding:10px 11px 30px}.logo{font-size:18px}.logo-mark{font-size:24px;padding:8px}.head-controls{gap:6px}.parent-button{font-size:12px;padding:9px 10px}.card{padding:13px;border-radius:22px}.facts{gap:8px}.fact{min-height:112px;border-radius:18px;padding:6px 3px}.fact .object{font-size:clamp(24px,6.2vw,33px)}.fact .equal{font-size:24px}.fact .swap{font-size:17px}.visual-question{min-height:82px}.visual-question .object{font-size:48px}.q-mark{font-size:33px}.scale-board{height:271px}.hanger{width:43%}.hanger.left{left:-2%}.hanger.right{right:-2%}.pan{height:85px;min-height:85px}.pan .object{font-size:clamp(25px,8vw,35px)}.pan .removable{min-width:27px;min-height:31px}.controls{gap:8px}.add{min-height:76px}.mini-controls{gap:6px}.mini-controls button{min-width:55px;min-height:75px}.split-row{grid-template-columns:1fr 20px 1fr;gap:3px}.split-group{min-height:66px;padding:4px 1px}.split-group .object{font-size:clamp(19px,6vw,29px)}.tutorial-scene{min-height:118px}.dialog{padding:16px}.parent-step{padding:10px}}
+    @media(max-width:360px){.logo{font-size:16px}.parent-button{font-size:11px}.fact .object{font-size:22px}.pan .object{font-size:24px}.split-group .object{font-size:18px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo"><span class="logo-mark" aria-hidden="true">⚖️</span><span>Cân vui</span></div>
+    <div class="head-controls">
+      <button id="speak" class="icon-button" type="button" aria-label="Nghe câu hỏi" title="Nghe câu hỏi">🔊</button>
+      <button id="parentOpen" class="parent-button" type="button">👨‍👩‍👧 Bố mẹ</button>
+    </div>
+  </header>
+  <nav id="progress" class="progress" aria-label="Chọn bài tập"></nav>
+  <main>
+    <section class="card" aria-label="Hai phép cân mẫu">
+      <div class="section-row"><span class="section-emoji" role="img" aria-label="Nhìn các cân mẫu">👀</span><span class="sr-only">Chạm vào một phép cân mẫu để đổi vị trí hai bên</span></div>
+      <div class="facts" id="facts"></div>
+    </section>
+    <section class="card game" aria-label="Bài tập cân bằng">
+      <div class="game-top"><span class="section-emoji" role="img" aria-label="Đến lượt con">🎯</span><button type="button" id="hintToggle" class="hint-toggle" aria-label="Xem gợi ý bằng hình" aria-expanded="false">💡</button></div>
+      <div class="visual-question" id="question" aria-label="Câu hỏi bằng hình ảnh"></div>
+      <section class="tutorial" id="tutorial" aria-label="Gợi ý từng bước bằng hình ảnh" hidden>
+        <div class="tutorial-tools"><button type="button" id="prevHint" class="round" aria-label="Bước trước">‹</button><span id="hintCounter" class="stage-counter" aria-live="polite"></span><button type="button" id="nextHint" class="round" aria-label="Bước tiếp theo">›</button></div>
+        <div class="tutorial-scene" id="hintScene"></div>
+      </section>
+      <div class="scale-board" role="group" aria-label="Cân thăng bằng tương tác">
+        <div class="scale"><div class="post"></div><div class="beam" id="beam"><div class="pivot"></div><div class="hanger left"><div class="rope"></div><div class="pan" id="leftPan" aria-label="Đĩa cân trái"></div></div><div class="hanger right"><div class="rope"></div><div class="pan" id="rightPan" aria-label="Đĩa cân phải, chạm vào vật để bớt"></div></div></div></div>
+        <div class="balance-badge" id="balanceBadge" aria-hidden="true">↙️</div>
+      </div>
+      <div class="controls"><button id="add" class="add" type="button" aria-label="Thêm một vật lên đĩa cân phải"><span class="object" id="piece" aria-hidden="true">🌽</span><span class="plus" aria-hidden="true">＋</span></button><div class="mini-controls"><button id="remove" type="button" aria-label="Bớt một vật khỏi đĩa phải">−</button><button id="reset" type="button" aria-label="Làm lại">↻</button></div></div>
+      <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer>Không tài khoản · Không quảng cáo · Không gửi dữ liệu</footer>
+</div>
+<div class="overlay" id="parentOverlay" hidden>
+  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
+    <div class="dialog-header"><h2 id="parentTitle">👨‍👩‍👧 Góc bố mẹ</h2><button class="close" id="parentClose" type="button" aria-label="Đóng">×</button></div>
+    <div class="guide parent-text"><strong>🌼 Cách chơi (dành cho bố mẹ)</strong><p>👀 Cho bé nhìn hai cân mẫu ở trên. 👆 Bé chạm đồ vật để thêm vào cân bên phải. ⚖️ Bé quan sát cân nghiêng hay ngang và tự sửa. 💡 Nếu cần, bấm bóng đèn để xem từng bước bằng hình ảnh. Không giới hạn thời gian hay số lần thử.</p><p>Gợi ý hỏi: “Hai bên có bằng nhau không?”, “Con thay được những món nào?”, “Chúng mình chia đều thành mấy nhóm?”</p></div>
+    <h3 id="lessonTitle" style="font-size:17px;margin:10px 0 6px"></h3>
+    <p id="lessonIntro" class="parent-text" style="margin:0 0 10px"></p>
+    <div id="parentSteps"></div>
+    <div class="parent-footer">Hình vẽ chỉ biểu diễn khối lượng giả định để luyện tư duy, không phải cân nặng thật của các món đồ. Bài tập số 5 là ví dụ mở rộng để luyện chia 3 nhóm.</div>
+  </section>
+</div>
+<div class="overlay" id="successOverlay" hidden>
+  <section class="dialog success-dialog" role="dialog" aria-modal="true" aria-label="Hoàn thành bài tập">
+    <div class="success-icon" aria-hidden="true">🌟🎉🌟</div><div id="solvedEquation" class="success-equation"></div>
+    <button type="button" id="nextLevel" class="next" aria-label="Sang bài tiếp theo" title="Sang bài tiếp theo">➜</button>
+  </section>
+</div>
+<script>
+'use strict';
+// Các bài 1–4 chuyển thể từ PDF “Phương pháp so sánh và thay thế” do phụ huynh cung cấp.
+// Bài 5 là ví dụ mở rộng do ứng dụng tạo thêm để minh hoạ chia đều thành ba phần.
+const E = (emoji, count = 1) => ({emoji, count});
+const EQ = (left, right, text) => ({kind:'equation',left,right,text});
+const SPLIT = (left, right, parts, text) => ({kind:'split',left,right,parts,text});
+const lessons = [
+  {
+    title:'Củ khoai, rau và bắp ngô', intro:'Cùng một củ khoai có thể thay bằng hai bó rau hoặc bốn bắp ngô. Chia đều hai bên thành hai nhóm sẽ thấy mỗi bó rau bằng hai bắp ngô.',
+    left:E('🥬'),right:E('🌽'),leftName:'bó rau',rightName:'bắp ngô',leftMass:2,rightMass:1,
+    facts:[[E('🥔'),E('🥬',2)],[E('🥔'),E('🌽',4)]],
+    steps:[
+      EQ(E('🥔'),E('🥬',2),'1 củ khoai bằng 2 bó rau.'),
+      EQ(E('🥔'),E('🌽',4),'Cùng 1 củ khoai ấy bằng 4 bắp ngô.'),
+      EQ(E('🥬',2),E('🌽',4),'Thay củ khoai bằng hai nhóm có khối lượng bằng nó: 2 bó rau bằng 4 bắp ngô.'),
+      SPLIT(E('🥬'),E('🌽',2),2,'Chia CẢ HAI bên thành 2 phần bằng nhau: bên trái mỗi phần 1 bó rau, bên phải mỗi phần 2 bắp ngô.'),
+      EQ(E('🥬'),E('🌽',2),'Chỉ nhìn 1 phần: 1 bó rau bằng 2 bắp ngô. Không cần phép chia trên giấy.')]
+  },
+  {
+    title:'Bắp cải, cà tím và củ hành',intro:'Đổi bốn củ hành thành hai nhóm hai củ, mỗi nhóm tương đương một quả cà tím.',
+    left:E('🥬'),right:E('🍆'),leftName:'bắp cải',rightName:'quả cà tím',leftMass:4,rightMass:2,
+    facts:[[E('🍆'),E('🧅',2)],[E('🥬'),E('🧅',4)]],
+    steps:[
+      EQ(E('🍆'),E('🧅',2),'1 cà tím bằng 2 củ hành.'),
+      EQ(E('🥬'),E('🧅',4),'1 bắp cải bằng 4 củ hành.'),
+      EQ(E('🥬'),E('🧅',4),'Ta có bốn củ hành. Thử xếp chúng thành hai cặp, mỗi cặp hai củ.'),
+      SPLIT(E('🍆'),E('🧅',2),2,'2 quả cà tím sẽ thay được 2 nhóm, mỗi nhóm 2 củ hành. Đó cũng là 4 củ hành của bắp cải.'),
+      EQ(E('🥬'),E('🍆',2),'Thay từng cặp hành bằng 1 cà tím: bắp cải bằng 2 cà tím.')]
+  },
+  {
+    title:'Quả lê, táo và cam',intro:'Một quả lê có khối lượng bằng bốn quả cam; mỗi quả táo bằng hai quả cam.',
+    left:E('🍐'),right:E('🍎'),leftName:'quả lê',rightName:'quả táo',leftMass:4,rightMass:2,
+    facts:[[E('🍐'),E('🍊',4)],[E('🍎'),E('🍊',2)]],
+    steps:[
+      EQ(E('🍐'),E('🍊',4),'1 quả lê bằng 4 quả cam.'),
+      EQ(E('🍎'),E('🍊',2),'1 quả táo bằng 2 quả cam.'),
+      EQ(E('🍐'),E('🍊',4),'Nhìn bốn quả cam và nghĩ cách thay mỗi cặp bằng quả táo.'),
+      SPLIT(E('🍎'),E('🍊',2),2,'Xếp 4 quả cam thành 2 nhóm; mỗi nhóm 2 quả cam tương đương một quả táo.'),
+      EQ(E('🍐'),E('🍎',2),'Vậy 1 quả lê bằng 2 quả táo.')]
+  },
+  {
+    title:'Trực thăng, ô tô và máy kéo',intro:'Bài này luyện thay hai lần: trước thay trực thăng bằng ô tô, rồi thay từng ô tô bằng máy kéo.',
+    left:E('🚁'),right:E('🚜'),leftName:'trực thăng',rightName:'máy kéo',leftMass:4,rightMass:1,
+    facts:[[E('🚁'),E('🚗',2)],[E('🚗'),E('🚜',2)]],
+    steps:[
+      EQ(E('🚁'),E('🚗',2),'1 trực thăng bằng 2 ô tô.'),
+      EQ(E('🚗'),E('🚜',2),'Mỗi ô tô bằng 2 máy kéo.'),
+      EQ(E('🚁'),E('🚗',2),'Đầu tiên thay trực thăng bằng 2 ô tô.'),
+      SPLIT(E('🚗'),E('🚜',2),2,'Tách thành 2 nhóm ô tô; mỗi nhóm 1 ô tô thay được bằng 2 máy kéo.'),
+      EQ(E('🚁'),E('🚜',4),'Có 2 nhóm máy kéo, mỗi nhóm 2 chiếc: tổng cộng 4 máy kéo.')]
+  },
+  {
+    title:'Chia đều ba nhóm',intro:'Ví dụ bổ sung để bé thấy phép chia 3 bằng mắt, không yêu cầu biết phép tính.',
+    left:E('🥬'),right:E('🌽'),leftName:'bó rau',rightName:'bắp ngô',leftMass:2,rightMass:1,
+    facts:[[E('🥔'),E('🥬',3)],[E('🥔'),E('🌽',6)]],
+    steps:[
+      EQ(E('🥔'),E('🥬',3),'1 củ khoai bằng 3 bó rau.'),
+      EQ(E('🥔'),E('🌽',6),'Cùng 1 củ khoai ấy bằng 6 bắp ngô.'),
+      EQ(E('🥬',3),E('🌽',6),'Thay củ khoai ở cả hai cân: 3 bó rau bằng 6 bắp ngô.'),
+      SPLIT(E('🥬'),E('🌽',2),3,'Chia CẢ HAI bên thành 3 phần: bên trái mỗi phần một bó rau, bên phải mỗi phần hai bắp ngô.'),
+      EQ(E('🥬'),E('🌽',2),'Chọn một trong ba phần bằng nhau: 1 bó rau bằng 2 bắp ngô.')]
+  }
+];
+const $ = id => document.getElementById(id);
+const state = {index:0,placed:0,step:0,hintOpen:false,swapped:new Set(),done:new Set(),solved:false,winTimer:null};
+const lesson = () => lessons[state.index];
+function objects(item){return Array.from({length:item.count},()=>`<span class="object" aria-hidden="true">${item.emoji}</span>`).join('')}
+function equation(left,right){return `<span class="objects">${objects(left)}</span><span class="equal" aria-hidden="true">=</span><span class="objects">${objects(right)}</span>`}
+function scene(step){
+  if(step.kind==='equation')return `<div class="scene-equation">${equation(step.left,step.right)}</div>`;
+  const side = (item,type) => `<div class="split-side ${type}" style="--parts:${step.parts}">${Array.from({length:step.parts},(_,i)=>`<div class="split-group ${i===0?'split-focus':''}" style="--group:${i};--shift:${i-(step.parts-1)/2}">${objects(item)}</div>`).join('')}</div>`;
+  return `<div class="scene-split"><div class="split-row">${side(step.left,'left')}<span class="split-symbol">=</span>${side(step.right,'right')}</div></div>`;
+}
+function renderFact(pair,i){const swapped=state.swapped.has(i);return `<button type="button" class="fact ${swapped?'swapped':''}" data-fact="${i}" aria-label="Phép cân mẫu ${i+1}, chạm để đổi hai bên"><span class="equation">${equation(swapped?pair[1]:pair[0],swapped?pair[0]:pair[1])}</span><span class="swap" aria-hidden="true">↔</span></button>`}
+function renderDots(){$('progress').innerHTML=lessons.map((l,i)=>`<button class="dot ${i===state.index?'active':''} ${state.done.has(i)?'done':''}" type="button" data-level="${i}" aria-label="Bài ${i+1}: ${l.title}" aria-current="${i===state.index?'step':'false'}">${state.done.has(i)?'✓':i+1}</button>`).join('')}
+function renderHint(){const steps=lesson().steps;$('tutorial').hidden=!state.hintOpen;$('hintToggle').setAttribute('aria-expanded',String(state.hintOpen));$('hintCounter').textContent=`${state.step+1} / ${steps.length}`;$('hintScene').innerHTML=scene(steps[state.step]);$('prevHint').disabled=state.step===0;$('nextHint').disabled=state.step===steps.length-1}
+function renderParent(){const l=lesson();$('lessonTitle').textContent=`Bài ${state.index+1}: ${l.title}`;$('lessonIntro').textContent=l.intro;$('parentSteps').innerHTML=l.steps.map((s,i)=>`<div class="parent-step"><span class="step-number">${i+1}</span><div><p>${s.text}</p>${scene(s)}</div></div>`).join('')}
+function clearWin(){if(state.winTimer){clearTimeout(state.winTimer);state.winTimer=null}}
+function openLevel(i){clearWin();$('successOverlay').hidden=true;state.index=i;state.placed=0;state.step=0;state.hintOpen=false;state.swapped=new Set();state.solved=false;$('feedback').textContent='';$('feedback').className='feedback';
+ const l=lesson();$('facts').innerHTML=l.facts.map(renderFact).join('');$('question').innerHTML=equation(l.left,{emoji:l.right.emoji,count:1}).replace(`<span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>` ,`<span class="q-mark" aria-hidden="true">?</span><span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>`);$('question').setAttribute('aria-label',`Một ${l.left.emoji} bằng bao nhiêu ${l.right.emoji}?`);$('piece').textContent=l.right.emoji;$('add').setAttribute('aria-label',`Thêm một ${l.right.emoji} lên đĩa cân phải`);renderDots();renderHint();renderParent();updateScale()}
+function updateScale(){const l=lesson();const left=l.leftMass,right=state.placed*l.rightMass,tilt=left===right?0:left>right?-9:9;$('beam').style.setProperty('--tilt',`${tilt}deg`);$('leftPan').innerHTML=objects(l.left);$('rightPan').innerHTML=state.placed?Array.from({length:state.placed},()=>`<button class="removable" type="button" aria-label="Bớt một ${l.right.emoji}"><span class="object" aria-hidden="true">${l.right.emoji}</span></button>`).join(''):'<span class="empty" aria-hidden="true">＋</span>';
+ $('balanceBadge').textContent=left===right?'⚖️ ✨':left>right?'↙️':'↘️';$('balanceBadge').className='balance-badge'+(left===right?' balanced':'');$('remove').disabled=state.placed===0||state.solved;$('add').disabled=state.solved||state.placed>=12;
+ $('feedback').textContent=left===right?'Hai đĩa cân bằng nhau!':left>right?'Đĩa bên trái nặng hơn.':'Đĩa bên phải nặng hơn.';
+ if(left===right&&!state.solved){state.solved=true;state.done.add(state.index);renderDots();state.winTimer=setTimeout(()=>{if(!state.solved)return;$('solvedEquation').innerHTML=equation(l.left,{emoji:l.right.emoji,count:state.placed});$('successOverlay').hidden=false;$('nextLevel').focus();state.winTimer=null;},680)}
+}
+function changeCount(delta){if(state.solved)return;clearWin();state.placed=Math.max(0,Math.min(12,state.placed+delta));updateScale()}
+function speak(){if(!('speechSynthesis' in window))return;const l=lesson();try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(`Một ${l.leftName} nặng bằng mấy ${l.rightName}? Con đặt các món bên phải để cân bằng nhé.`);u.lang='vi-VN';u.rate=.83;window.speechSynthesis.speak(u)}catch(e){ /* Thiết bị không có giọng tiếng Việt: chơi bằng hình vẫn hoạt động. */ }}
+function closeParent(){$('parentOverlay').hidden=true;$('parentOpen').focus()}
+$('progress').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(b)openLevel(Number(b.dataset.level))});
+$('facts').addEventListener('click',e=>{const b=e.target.closest('[data-fact]');if(!b)return;const i=Number(b.dataset.fact);state.swapped.has(i)?state.swapped.delete(i):state.swapped.add(i);$('facts').innerHTML=lesson().facts.map(renderFact).join('')});
+$('add').addEventListener('click',()=>changeCount(1));$('remove').addEventListener('click',()=>changeCount(-1));$('reset').addEventListener('click',()=>openLevel(state.index));
+$('rightPan').addEventListener('click',e=>{if(e.target.closest('.removable'))changeCount(-1)});
+$('hintToggle').addEventListener('click',()=>{state.hintOpen=!state.hintOpen;state.step=0;renderHint()});
+$('prevHint').addEventListener('click',()=>{state.step=Math.max(0,state.step-1);renderHint()});$('nextHint').addEventListener('click',()=>{state.step=Math.min(lesson().steps.length-1,state.step+1);renderHint()});
+$('speak').addEventListener('click',speak);
+$('parentOpen').addEventListener('click',()=>{$('parentOverlay').hidden=false;$('parentClose').focus()});$('parentClose').addEventListener('click',closeParent);
+$('parentOverlay').addEventListener('click',e=>{if(e.target===$('parentOverlay'))closeParent()});
+$('nextLevel').addEventListener('click',()=>openLevel((state.index+1)%lessons.length));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('parentOverlay').hidden)closeParent();else if(!$('successOverlay').hidden){$('successOverlay').hidden=true;$('add').focus()}}});
+openLevel(0);
+</script>
+</body>
+</html>
