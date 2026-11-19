@@ -32,6 +32,27 @@
     .tutorial-tools{display:flex;align-items:center;justify-content:space-between;gap:8px}.round{background:white;border:1.5px solid #dfd9bf;border-radius:14px;min-width:45px;min-height:43px;font-size:22px;color:#577668}.stage-counter{font-weight:900;color:#9a7743;font-size:15px}
     .tutorial-scene{display:grid;place-items:center;min-height:137px;overflow:hidden}.scene-equation{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;animation:appear .4s ease-out}.scene-equation .objects{max-width:350px}.scene-equation .object{font-size:clamp(32px,5.8vw,46px)}
     .scene-split{width:100%;animation:appear .5s ease}.split-row{display:grid;grid-template-columns:1fr 27px 1fr;align-items:center;gap:5px}.split-side{display:grid;grid-template-columns:repeat(var(--parts),minmax(0,1fr));gap:5px}.split-group{min-height:75px;display:flex;align-items:center;justify-content:center;gap:0;background:#fff;border:2px solid #e9cc99;border-radius:16px;padding:5px 2px;animation:fan-out .6s both;animation-delay:calc(var(--group) * 120ms)}.split-side.left .split-group{border-color:#b7dfca;background:#edf9f1}.split-group .object{font-size:clamp(22px,4vw,33px)}.split-symbol{font-size:25px;color:#e4a64d;font-weight:950;text-align:center}.split-focus{box-shadow:0 0 0 4px #f4d37e;border-color:#deb15d!important}
+    /* Gợi ý trực quan: gom nhóm -> từng cặp biến mất -> vật tương đương xuất hiện tại chỗ. */
+    .scene-replacement{width:100%;display:grid;justify-items:center;gap:12px;animation:appear .35s ease-out}
+    .swap-legend{display:flex;align-items:center;justify-content:center;gap:9px;background:#fff;border:1.5px solid #e8d6a8;border-radius:999px;padding:4px 14px;max-width:100%}
+    .swap-legend .objects{max-width:none}.swap-legend .object{font-size:clamp(28px,5vw,39px)}
+    .swap-legend .swap-arrow{font-size:26px;line-height:1;color:#c18c3e;font-weight:900}
+    .group-equation{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;width:100%}
+    .group-equation .base-item{flex:none;display:flex;align-items:center;justify-content:center}.group-equation .base-item .object{font-size:clamp(37px,6.5vw,54px)}
+    .group-row{display:flex;align-items:stretch;justify-content:center;gap:9px;max-width:100%;flex-wrap:wrap}
+    .substitution-group{border:2px solid #e6bf83;background:#fff9e9;border-radius:17px;min-width:90px;min-height:83px;padding:10px 8px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 3px 0 #f4e5c7;animation:fan-out .48s both;animation-delay:calc(var(--group) * 90ms)}
+    .substitution-group .objects{max-width:none}.substitution-group .object{font-size:clamp(30px,5.1vw,44px)}
+    .substitution-group.group-finished{background:#ecf9ee;border-color:#9dd9b5}
+    .substitution-group.group-current{background:#effff2;border-color:#28a97f;box-shadow:0 0 0 4px #91dfb277}
+    .swap-slot{position:relative;min-width:82px;min-height:53px;display:grid;place-items:center;overflow:visible}
+    .swap-slot .old-items,.swap-slot .new-items{grid-area:1/1;display:flex;justify-content:center;align-items:center;white-space:nowrap}
+    .swap-slot .old-items{z-index:2}.swap-slot .new-items{z-index:1;opacity:0}
+    .swap-slot.animate .old-items{animation:lift-away .55s .50s ease-in forwards}
+    .swap-slot.animate .new-items{animation:drop-in .60s 1.08s cubic-bezier(.2,1.25,.3,1) forwards}
+    .swap-slot.static .old-items{display:none}.swap-slot.static .new-items{opacity:1}
+    .hint-replay{font-size:20px}
+    @keyframes lift-away{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-20px) scale(.55)}}
+    @keyframes drop-in{0%{opacity:0;transform:translateY(-20px) scale(.6)}100%{opacity:1;transform:translateY(0) scale(1)}}
     .scale-board{height:290px;border-radius:25px;background:linear-gradient(145deg,#e8f5ff,#f5fbfb 55%,#fff5df);position:relative;isolation:isolate;overflow:hidden}
     .scale-board:after{content:"";position:absolute;bottom:0;left:0;right:0;height:37px;background:#e8f0dc;border-top:2px solid #d3e3d2;z-index:-1}
     .scale{position:absolute;inset:8px 0 26px}.post{position:absolute;left:calc(50% - 7px);width:14px;height:183px;bottom:0;border-radius:15px;background:linear-gradient(90deg,#d9a276,#a46b4b)}.post:after{content:"";position:absolute;width:100px;height:17px;border-radius:15px;background:#c68d6a;bottom:-5px;left:50%;transform:translateX(-50%)}
@@ -73,8 +94,10 @@
     footer{text-align:center;color:#8a9895;font-size:12px;margin:22px 0 0}
     @keyframes appear{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:scale(1)}} @keyframes fan-out{from{opacity:.25;transform:translateX(calc(var(--shift) * -22px)) scale(.88)}to{opacity:1;transform:translateX(0) scale(1)}} @keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
     @media(max-width:600px){.app{padding:10px 11px 30px}.logo{font-size:18px}.logo-mark{font-size:24px;padding:8px}.head-controls{gap:6px}.parent-button{font-size:12px;padding:9px 10px}.card{padding:13px;border-radius:22px}.facts{gap:8px}.fact{min-height:112px;border-radius:18px;padding:6px 3px}.fact .object{font-size:clamp(24px,6.2vw,33px)}.fact .equal{font-size:24px}.fact .swap{font-size:17px}.visual-question{min-height:82px}.visual-question .object{font-size:48px}.q-mark{font-size:33px}.scale-board{height:271px}.hanger{width:43%}.hanger.left{left:-2%}.hanger.right{right:-2%}.pan{height:85px;min-height:85px}.pan .object{font-size:clamp(25px,8vw,35px)}.pan .removable{min-width:27px;min-height:31px}.controls{gap:8px}.add{min-height:76px}.mini-controls{gap:6px}.mini-controls button{min-width:55px;min-height:75px}.split-row{grid-template-columns:1fr;gap:5px}.split-symbol{font-size:23px}.split-group{min-height:52px;padding:4px 2px}.split-group .object{font-size:clamp(22px,6.5vw,30px)}.tutorial-scene{min-height:180px}.dialog{padding:16px}.parent-step{padding:10px}}
+    @media(max-width:600px){.group-equation{gap:5px}.group-row{gap:5px}.substitution-group{min-width:66px;min-height:69px;padding:5px 3px;border-radius:12px}.substitution-group .object{font-size:clamp(25px,6.4vw,34px)}.swap-slot{min-width:65px;min-height:47px}.group-equation .base-item .object{font-size:37px}.swap-legend .object{font-size:28px}.scene-replacement{gap:8px}}
+    @media(max-width:360px){.substitution-group{min-width:58px}.substitution-group .object{font-size:24px}.group-row{gap:3px}.group-equation{gap:3px}.swap-slot{min-width:58px}}
     @media(max-width:360px){.logo{font-size:16px}.parent-button{font-size:11px}.fact .object{font-size:22px}.pan .object{font-size:24px}.split-group .object{font-size:18px}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
@@ -96,7 +119,7 @@
       <div class="game-top"><span class="section-emoji" role="img" aria-label="Đến lượt con">🎯</span><button type="button" id="hintToggle" class="hint-toggle" aria-label="Xem gợi ý bằng hình" aria-expanded="false">💡</button></div>
       <div class="visual-question" id="question" aria-label="Câu hỏi bằng hình ảnh"></div>
       <section class="tutorial" id="tutorial" aria-label="Gợi ý từng bước bằng hình ảnh" hidden>
-        <div class="tutorial-tools"><button type="button" id="prevHint" class="round" aria-label="Bước trước">‹</button><span id="hintCounter" class="stage-counter" aria-live="polite"></span><button type="button" id="nextHint" class="round" aria-label="Bước tiếp theo">›</button></div>
+        <div class="tutorial-tools"><button type="button" id="prevHint" class="round" aria-label="Bước trước">‹</button><span id="hintCounter" class="stage-counter" aria-live="polite"></span><button type="button" id="hintReplay" class="round hint-replay" aria-label="Xem lại chuyển động">↻</button><button type="button" id="nextHint" class="round" aria-label="Bước tiếp theo">›</button></div>
         <div class="tutorial-scene" id="hintScene"></div>
       </section>
       <div class="scale-board" role="group" aria-label="Cân thăng bằng tương tác">
@@ -136,63 +159,114 @@
 const E = (emoji, count = 1) => ({emoji, count});
 const EQ = (left, right, text) => ({kind:'equation',left,right,text});
 const SPLIT = (left, right, parts, text) => ({kind:'split',left,right,parts,text});
+const GROUP = (base, group, parts, text) => ({kind:'group',base,group,parts,text});
+const REPLACE = (base, from, to, parts, replacing, text) => ({kind:'replace',base,from,to,parts,replacing,text});
+// Toàn bộ lời giải phải bảo toàn khối lượng ở MỌI bước, kể cả lúc thay một nhóm.
+// Khối lượng là đơn vị giả định (không phải khối lượng thực của món đồ).
 const lessons = [
   {
-    title:'Củ khoai, rau và bắp ngô', intro:'Cùng một củ khoai có thể thay bằng hai bó rau hoặc bốn bắp ngô. Chia đều hai bên thành hai nhóm sẽ thấy mỗi bó rau bằng hai bắp ngô.',
-    left:E('🥬'),right:E('🌽'),leftName:'bó rau',rightName:'bắp ngô',leftMass:2,rightMass:1,
+    title:'Củ khoai, rau và bắp ngô',
+    intro:'Cùng một củ khoai đổi được 2 bó rau hoặc 4 bắp ngô. Thay củ khoai, rồi CHIA ĐỀU CẢ HAI BÊN thành hai nhóm. Nhìn một nhóm sẽ thấy kết quả.',
+    left:E('🥬'), right:E('🌽'), leftName:'bó rau', rightName:'bắp ngô',leftMass:2,rightMass:1,
+    mass:{'🥔':4,'🥬':2,'🌽':1},
     facts:[[E('🥔'),E('🥬',2)],[E('🥔'),E('🌽',4)]],
     steps:[
-      EQ(E('🥔'),E('🥬',2),'1 củ khoai bằng 2 bó rau.'),
-      EQ(E('🥔'),E('🌽',4),'Cùng 1 củ khoai ấy bằng 4 bắp ngô.'),
-      EQ(E('🥬',2),E('🌽',4),'Thay củ khoai bằng hai nhóm có khối lượng bằng nó: 2 bó rau bằng 4 bắp ngô.'),
-      SPLIT(E('🥬'),E('🌽',2),2,'Chia CẢ HAI bên thành 2 phần bằng nhau: bên trái mỗi phần 1 bó rau, bên phải mỗi phần 2 bắp ngô.'),
-      EQ(E('🥬'),E('🌽',2),'Chỉ nhìn 1 phần: 1 bó rau bằng 2 bắp ngô. Không cần phép chia trên giấy.')]
+      EQ(E('🥔'),E('🥬',2),'Nhìn cân mẫu thứ nhất: 1 củ khoai bằng 2 bó rau.'),
+      EQ(E('🥔'),E('🌽',4),'Nhìn cân mẫu thứ hai: cùng củ khoai ấy bằng 4 bắp ngô.'),
+      EQ(E('🥬',2),E('🌽',4),'Hai bên cùng thay cho một củ khoai: 2 bó rau bằng 4 bắp ngô.'),
+      SPLIT(E('🥬'),E('🌽',2),2,'Chia đều CẢ HAI bên thành 2 nhóm: mỗi nhóm bên trái có 1 bó rau, bên phải có 2 bắp ngô.'),
+      EQ(E('🥬'),E('🌽',2),'Giữ lại một cặp nhóm tương đương: 1 bó rau bằng 2 bắp ngô.')
+    ]
   },
   {
-    title:'Bắp cải, cà tím và củ hành',intro:'Đổi bốn củ hành thành hai nhóm hai củ, mỗi nhóm tương đương một quả cà tím.',
+    title:'Bắp cải, cà tím và củ hành',
+    intro:'Từ cân mẫu, 2 củ hành thay được 1 cà tím. Đặt 4 củ hành của bắp cải thành 2 cặp, rồi đổi MỖI cặp thành 1 cà tím, ngay tại vị trí đó.',
     left:E('🥬'),right:E('🍆'),leftName:'bắp cải',rightName:'quả cà tím',leftMass:4,rightMass:2,
+    mass:{'🍆':2,'🧅':1,'🥬':4},
     facts:[[E('🍆'),E('🧅',2)],[E('🥬'),E('🧅',4)]],
     steps:[
-      EQ(E('🍆'),E('🧅',2),'1 cà tím bằng 2 củ hành.'),
-      EQ(E('🥬'),E('🧅',4),'1 bắp cải bằng 4 củ hành.'),
-      EQ(E('🥬'),E('🧅',4),'Ta có bốn củ hành. Thử xếp chúng thành hai cặp, mỗi cặp hai củ.'),
-      SPLIT(E('🍆'),E('🧅',2),2,'2 quả cà tím sẽ thay được 2 nhóm, mỗi nhóm 2 củ hành. Đó cũng là 4 củ hành của bắp cải.'),
-      EQ(E('🥬'),E('🍆',2),'Thay từng cặp hành bằng 1 cà tím: bắp cải bằng 2 cà tím.')]
+      EQ(E('🍆'),E('🧅',2),'1 cà tím nặng bằng 2 củ hành. Nghĩa là có thể lấy 2 củ hành ra và thay bằng 1 cà tím.'),
+      EQ(E('🥬'),E('🧅',4),'1 bắp cải nặng bằng 4 củ hành.'),
+      GROUP(E('🥬'),E('🧅',2),2,'Đặt 4 củ hành thành 2 cặp: (hành + hành) và (hành + hành). Hai cặp vẫn có tổng khối lượng bằng bắp cải.'),
+      REPLACE(E('🥬'),E('🧅',2),E('🍆'),2,0,'Lấy 2 củ hành của cặp thứ nhất ra, đặt 1 cà tím vào đúng vị trí. Cặp thứ hai vẫn là 2 củ hành.'),
+      REPLACE(E('🥬'),E('🧅',2),E('🍆'),2,1,'Tiếp tục lấy 2 củ hành còn lại ra, đặt thêm 1 cà tím vào. Ta có 2 cà tím thay cho 4 củ hành.'),
+      EQ(E('🥬'),E('🍆',2),'Kết luận: 1 bắp cải bằng 2 cà tím.')
+    ]
   },
   {
-    title:'Quả lê, táo và cam',intro:'Một quả lê có khối lượng bằng bốn quả cam; mỗi quả táo bằng hai quả cam.',
+    title:'Quả lê, táo và cam',
+    intro:'Cứ 2 quả cam đổi được 1 quả táo. Hãy gom bốn quả cam thành hai cặp, rồi thay từng cặp bằng táo.',
     left:E('🍐'),right:E('🍎'),leftName:'quả lê',rightName:'quả táo',leftMass:4,rightMass:2,
+    mass:{'🍐':4,'🍊':1,'🍎':2},
     facts:[[E('🍐'),E('🍊',4)],[E('🍎'),E('🍊',2)]],
     steps:[
       EQ(E('🍐'),E('🍊',4),'1 quả lê bằng 4 quả cam.'),
-      EQ(E('🍎'),E('🍊',2),'1 quả táo bằng 2 quả cam.'),
-      EQ(E('🍐'),E('🍊',4),'Nhìn bốn quả cam và nghĩ cách thay mỗi cặp bằng quả táo.'),
-      SPLIT(E('🍎'),E('🍊',2),2,'Xếp 4 quả cam thành 2 nhóm; mỗi nhóm 2 quả cam tương đương một quả táo.'),
-      EQ(E('🍐'),E('🍎',2),'Vậy 1 quả lê bằng 2 quả táo.')]
+      EQ(E('🍎'),E('🍊',2),'1 quả táo bằng 2 quả cam. Có thể lấy cặp 2 cam và đặt 1 táo vào.'),
+      GROUP(E('🍐'),E('🍊',2),2,'Chia 4 quả cam thành 2 cặp. Đảm bảo không thêm, không bớt quả nào.'),
+      REPLACE(E('🍐'),E('🍊',2),E('🍎'),2,0,'Lấy cặp 2 cam thứ nhất ra và thay vào đó 1 quả táo.'),
+      REPLACE(E('🍐'),E('🍊',2),E('🍎'),2,1,'Đổi nốt cặp 2 quả cam còn lại thành 1 quả táo thứ hai.'),
+      EQ(E('🍐'),E('🍎',2),'Kết luận: 1 quả lê bằng 2 quả táo.')
+    ]
   },
   {
-    title:'Trực thăng, ô tô và máy kéo',intro:'Bài này luyện thay hai lần: trước thay trực thăng bằng ô tô, rồi thay từng ô tô bằng máy kéo.',
+    title:'Trực thăng, ô tô và máy kéo',
+    intro:'Bài thay hai tầng: một trực thăng bằng 2 ô tô; mỗi ô tô lại đổi được 2 máy kéo. Phải thay TỪNG ô tô, không đổi cả hai ô tô thành một cặp máy kéo.',
     left:E('🚁'),right:E('🚜'),leftName:'trực thăng',rightName:'máy kéo',leftMass:4,rightMass:1,
+    mass:{'🚁':4,'🚗':2,'🚜':1},
     facts:[[E('🚁'),E('🚗',2)],[E('🚗'),E('🚜',2)]],
     steps:[
       EQ(E('🚁'),E('🚗',2),'1 trực thăng bằng 2 ô tô.'),
-      EQ(E('🚗'),E('🚜',2),'Mỗi ô tô bằng 2 máy kéo.'),
-      EQ(E('🚁'),E('🚗',2),'Đầu tiên thay trực thăng bằng 2 ô tô.'),
-      SPLIT(E('🚗'),E('🚜',2),2,'Tách thành 2 nhóm ô tô; mỗi nhóm 1 ô tô thay được bằng 2 máy kéo.'),
-      EQ(E('🚁'),E('🚜',4),'Có 2 nhóm máy kéo, mỗi nhóm 2 chiếc: tổng cộng 4 máy kéo.')]
+      EQ(E('🚗'),E('🚜',2),'Mỗi ô tô bằng 2 máy kéo. Chú ý: một ô tô đổi thành hai máy kéo.'),
+      GROUP(E('🚁'),E('🚗'),2,'Ta có hai ô tô; để riêng thành hai nhóm, mỗi nhóm một chiếc.'),
+      REPLACE(E('🚁'),E('🚗'),E('🚜',2),2,0,'Nhấc ô tô thứ nhất ra và đặt 2 máy kéo vào vị trí đó. Vẫn còn một ô tô chưa đổi.'),
+      REPLACE(E('🚁'),E('🚗'),E('🚜',2),2,1,'Nhấc ô tô thứ hai ra và đặt tiếp 2 máy kéo vào. Tổng cộng có 4 máy kéo.'),
+      EQ(E('🚁'),E('🚜',4),'Kết luận: 1 trực thăng bằng 4 máy kéo.')
+    ]
   },
   {
-    title:'Chia đều ba nhóm',intro:'Ví dụ bổ sung để bé thấy phép chia 3 bằng mắt, không yêu cầu biết phép tính.',
+    title:'Chia đều ba nhóm',
+    intro:'Ví dụ mở rộng do website tạo, không có nguyên dạng trong PDF. Cùng củ khoai đổi được 3 bó rau hoặc 6 bắp ngô. Tách đều hai bên thành BA nhóm.',
     left:E('🥬'),right:E('🌽'),leftName:'bó rau',rightName:'bắp ngô',leftMass:2,rightMass:1,
+    mass:{'🥔':6,'🥬':2,'🌽':1},
     facts:[[E('🥔'),E('🥬',3)],[E('🥔'),E('🌽',6)]],
     steps:[
       EQ(E('🥔'),E('🥬',3),'1 củ khoai bằng 3 bó rau.'),
       EQ(E('🥔'),E('🌽',6),'Cùng 1 củ khoai ấy bằng 6 bắp ngô.'),
-      EQ(E('🥬',3),E('🌽',6),'Thay củ khoai ở cả hai cân: 3 bó rau bằng 6 bắp ngô.'),
-      SPLIT(E('🥬'),E('🌽',2),3,'Chia CẢ HAI bên thành 3 phần: bên trái mỗi phần một bó rau, bên phải mỗi phần hai bắp ngô.'),
-      EQ(E('🥬'),E('🌽',2),'Chọn một trong ba phần bằng nhau: 1 bó rau bằng 2 bắp ngô.')]
+      EQ(E('🥬',3),E('🌽',6),'Vì cùng nặng bằng một củ khoai: 3 bó rau bằng 6 bắp ngô.'),
+      SPLIT(E('🥬'),E('🌽',2),3,'Chia CẢ HAI bên thành 3 nhóm: mỗi nhóm bên trái có 1 bó rau; mỗi nhóm bên phải có 2 bắp ngô.'),
+      EQ(E('🥬'),E('🌽',2),'Chỉ giữ một cặp nhóm tương đương: 1 bó rau bằng 2 bắp ngô.')
+    ]
   }
 ];
+// Mọi cân mẫu, hình gợi ý và đáp án phải được kiểm tra tự động trước khi chạy.
+function auditLessons(){
+  const weight = (l,item) => {
+    if(!item||!Number.isInteger(item.count)||item.count<1||!Number.isFinite(l.mass[item.emoji]))throw Error(`Vật không hợp lệ ở ${l.title}`);
+    return item.count*l.mass[item.emoji];
+  };
+  const equivalentFact = (l,from,to) => l.facts.some(([a,b])=>
+    (a.emoji===from.emoji&&a.count===from.count&&b.emoji===to.emoji&&b.count===to.count) ||
+    (b.emoji===from.emoji&&b.count===from.count&&a.emoji===to.emoji&&a.count===to.count));
+  lessons.forEach((l,i)=>{
+    const answer=l.leftMass/l.rightMass;
+    if(!Number.isInteger(answer)||answer<1||answer>12||weight(l,l.left)!==l.leftMass||weight(l,l.right)!==l.rightMass)
+      throw Error(`Đáp án bài ${i+1} không hợp lệ`);
+    l.facts.forEach(([a,b])=>{if(weight(l,a)!==weight(l,b))throw Error(`Sai cân mẫu bài ${i+1}`)});
+    l.steps.forEach((s,j)=>{
+      let valid=false;
+      if(s.kind==='equation')valid=weight(l,s.left)===weight(l,s.right);
+      if(s.kind==='split')valid=Number.isInteger(s.parts)&&s.parts>1&&weight(l,s.left)===weight(l,s.right);
+      if(s.kind==='group')valid=Number.isInteger(s.parts)&&s.parts>1&&weight(l,s.base)===weight(l,s.group)*s.parts;
+      if(s.kind==='replace')valid=Number.isInteger(s.replacing)&&s.replacing>=0&&s.replacing<s.parts&&
+        weight(l,s.base)===weight(l,s.from)*s.parts&&weight(l,s.from)===weight(l,s.to)&&equivalentFact(l,s.from,s.to);
+      if(!valid)throw Error(`Lỗi bảo toàn khối lượng bài ${i+1}, gợi ý ${j+1}`);
+    });
+    const last=l.steps[l.steps.length-1];
+    if(last.kind!=='equation'||last.left.emoji!==l.left.emoji||last.left.count!==l.left.count||last.right.emoji!==l.right.emoji||last.right.count!==answer)
+      throw Error(`Kết luận bài ${i+1} không khớp đáp án`);
+  });
+}
+auditLessons();
 const $ = id => document.getElementById(id);
 const state = {index:0,placed:0,step:0,hintOpen:false,swapped:new Set(),done:new Set(),solved:false};
 let drag = null;
@@ -200,15 +274,30 @@ const MAX_PIECES=12;
 const lesson = () => lessons[state.index];
 function objects(item){return Array.from({length:item.count},()=>`<span class="object" aria-hidden="true">${item.emoji}</span>`).join('')}
 function equation(left,right){return `<span class="objects">${objects(left)}</span><span class="equal" aria-hidden="true">=</span><span class="objects">${objects(right)}</span>`}
-function scene(step){
+function scene(step,{animate=true}={}){
   if(step.kind==='equation')return `<div class="scene-equation">${equation(step.left,step.right)}</div>`;
-  const side = (item,type) => `<div class="split-side ${type}" style="--parts:${step.parts}">${Array.from({length:step.parts},(_,i)=>`<div class="split-group ${i===0?'split-focus':''}" style="--group:${i};--shift:${i-(step.parts-1)/2}">${objects(item)}</div>`).join('')}</div>`;
-  return `<div class="scene-split"><div class="split-row">${side(step.left,'left')}<span class="split-symbol">=</span>${side(step.right,'right')}</div></div>`;
+  if(step.kind==='split'){
+    const side = (item,type) => `<div class="split-side ${type}" style="--parts:${step.parts}">${Array.from({length:step.parts},(_,i)=>`<div class="split-group ${i===0?'split-focus':''}" style="--group:${i};--shift:${i-(step.parts-1)/2}">${objects(item)}</div>`).join('')}</div>`;
+    return `<div class="scene-split"><div class="split-row">${side(step.left,'left')}<span class="split-symbol">=</span>${side(step.right,'right')}</div></div>`;
+  }
+  if(step.kind==='group'||step.kind==='replace'){
+    const replacing=step.kind==='replace';
+    const groups=Array.from({length:step.parts},(_,i)=>{
+      const finished=replacing&&i<step.replacing;
+      const active=replacing&&i===step.replacing;
+      let content=objects(finished?step.to:(replacing?step.from:step.group));
+      if(active)content=`<span class="swap-slot ${animate?'animate':'static'}"><span class="old-items">${objects(step.from)}</span><span class="new-items">${objects(step.to)}</span></span>`;
+      return `<div class="substitution-group ${finished?'group-finished':''} ${active?'group-current':''}" style="--group:${i};--shift:${i-(step.parts-1)/2}" aria-label="Nhóm ${i+1}">${content}</div>`;
+    }).join('');
+    const legend=replacing?`<div class="swap-legend" aria-label="Thay nhóm tương đương"><span class="objects">${objects(step.from)}</span><span class="swap-arrow">➜</span><span class="objects">${objects(step.to)}</span></div>`:'';
+    return `<div class="scene-replacement">${legend}<div class="group-equation"><span class="base-item">${objects(step.base)}</span><span class="equal">=</span><div class="group-row">${groups}</div></div></div>`;
+  }
+  throw Error(`Loại gợi ý chưa hỗ trợ: ${step.kind}`);
 }
 function renderFact(pair,i){const swapped=state.swapped.has(i);return `<button type="button" class="fact ${swapped?'swapped':''}" data-fact="${i}" aria-label="Phép cân mẫu ${i+1}, chạm để đổi hai bên"><span class="equation">${equation(swapped?pair[1]:pair[0],swapped?pair[0]:pair[1])}</span><span class="swap" aria-hidden="true">↔</span></button>`}
 function renderDots(){$('progress').innerHTML=lessons.map((l,i)=>`<button class="dot ${i===state.index?'active':''} ${state.done.has(i)?'done':''}" type="button" data-level="${i}" aria-label="Bài ${i+1}: ${l.title}" aria-current="${i===state.index?'step':'false'}">${state.done.has(i)?'✓':i+1}</button>`).join('')}
-function renderHint(){const steps=lesson().steps;$('tutorial').hidden=!state.hintOpen;$('hintToggle').setAttribute('aria-expanded',String(state.hintOpen));$('hintCounter').textContent=`${state.step+1} / ${steps.length}`;$('hintScene').innerHTML=scene(steps[state.step]);$('prevHint').disabled=state.step===0;$('nextHint').disabled=state.step===steps.length-1}
-function renderParent(){const l=lesson();$('lessonTitle').textContent=`Bài ${state.index+1}: ${l.title}`;$('lessonIntro').textContent=l.intro;$('parentSteps').innerHTML=l.steps.map((s,i)=>`<div class="parent-step"><span class="step-number">${i+1}</span><div><p>${s.text}</p>${scene(s)}</div></div>`).join('')}
+function renderHint(){const steps=lesson().steps;$('tutorial').hidden=!state.hintOpen;$('hintToggle').setAttribute('aria-expanded',String(state.hintOpen));$('hintCounter').textContent=`${state.step+1} / ${steps.length}`;$('hintScene').innerHTML=scene(steps[state.step],{animate:true});$('prevHint').disabled=state.step===0;$('nextHint').disabled=state.step===steps.length-1}
+function renderParent(){const l=lesson();$('lessonTitle').textContent=`Bài ${state.index+1}: ${l.title}`;$('lessonIntro').textContent=l.intro;$('parentSteps').innerHTML=l.steps.map((s,i)=>`<div class="parent-step"><span class="step-number">${i+1}</span><div><p>${s.text}</p>${scene(s,{animate:false})}</div></div>`).join('')}
 function openLevel(i){finishDrag();$('successPanel').hidden=true;$('checkFeedback').textContent='';state.index=i;state.placed=0;state.step=0;state.hintOpen=false;state.swapped=new Set();state.solved=false;$('feedback').textContent='';$('feedback').className='feedback';
  const l=lesson();$('facts').innerHTML=l.facts.map(renderFact).join('');$('question').innerHTML=equation(l.left,{emoji:l.right.emoji,count:1}).replace(`<span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>` ,`<span class="q-mark" aria-hidden="true">?</span><span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>`);$('question').setAttribute('aria-label',`Một ${l.left.emoji} bằng bao nhiêu ${l.right.emoji}?`);$('piece').textContent=l.right.emoji;$('pieceSource').setAttribute('aria-label',`Chạm để thêm ${l.rightName}, hoặc kéo lên đĩa cân phải`);renderDots();renderHint();renderParent();updateScale()}
 function updateScale(){
@@ -307,7 +396,7 @@ $('rightPan').addEventListener('click',e=>{if((!window.PointerEvent||(e.detail==
 $('check').addEventListener('click',checkAnswer);
 $('reset').addEventListener('click',()=>openLevel(state.index));
 $('hintToggle').addEventListener('click',()=>{state.hintOpen=!state.hintOpen;state.step=0;renderHint()});
-$('prevHint').addEventListener('click',()=>{state.step=Math.max(0,state.step-1);renderHint()});$('nextHint').addEventListener('click',()=>{state.step=Math.min(lesson().steps.length-1,state.step+1);renderHint()});
+$('prevHint').addEventListener('click',()=>{state.step=Math.max(0,state.step-1);renderHint()});$('nextHint').addEventListener('click',()=>{state.step=Math.min(lesson().steps.length-1,state.step+1);renderHint()});$('hintReplay').addEventListener('click',()=>renderHint());
 $('speak').addEventListener('click',speak);
 $('parentOpen').addEventListener('click',()=>{$('parentOverlay').hidden=false;$('parentClose').focus()});$('parentClose').addEventListener('click',closeParent);
 $('parentOverlay').addEventListener('click',e=>{if(e.target===$('parentOverlay'))closeParent()});
