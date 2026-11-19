@@ -1,408 +1,52 @@
 <!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f9f7ef">
-  <meta name="description" content="Trò chơi cân thăng bằng và thay thế bằng hình ảnh dành cho bé 5–6 tuổi.">
-  <title>Cân vui ⚖️ Bé học thay thế</title>
-  <style>
-    :root {--ink:#283f45;--muted:#627781;--white:#fff;--paper:#f9f7ef;--outline:#e0e9df;--green:#168570;--gold:#e8ab43;--shadow:0 10px 32px rgba(49,81,67,.085)}
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;background:radial-gradient(circle at 10% 5%,#e7f6ed,transparent 36%),radial-gradient(circle at 95% 7%,#fff0dc,transparent 32%),var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
-    button{font:inherit;cursor:pointer;touch-action:manipulation} button:focus-visible{outline:4px solid #edac46;outline-offset:3px}
-    button:disabled{opacity:.45;cursor:not-allowed} [hidden]{display:none!important} .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .app{max-width:920px;margin:auto;padding:17px 17px 40px} header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 2px 17px}
-    .logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900;letter-spacing:-.04em}.logo-mark{background:#e1f5e6;border-radius:16px;padding:9px;font-size:28px}
-    .head-controls{display:flex;gap:9px;align-items:center}.icon-button,.parent-button{border:1.5px solid #dfe9e2;background:var(--white);border-radius:16px;min-height:48px;padding:10px 15px;box-shadow:0 3px 0 #d8e6db;font-weight:800;color:#325b59}.icon-button{font-size:23px;padding:7px 14px}.parent-button{font-size:14px}
-    .progress{display:flex;align-items:center;justify-content:center;gap:12px;margin:3px 0 16px}.dot{width:34px;height:34px;border:1.5px solid #d9e7da;background:#fff;border-radius:12px;font-weight:850;color:#66867b}
-    .dot.active{background:#167f70;color:white;border-color:#167f70;box-shadow:0 3px 0 #0e665a}.dot.done:not(.active){background:#dff6dc;border-color:#bce6bb;color:#16754d}
-    .card{background:white;border:1.5px solid var(--outline);border-radius:26px;padding:19px;box-shadow:var(--shadow)}
-    .section-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.section-emoji{font-size:29px;line-height:1}
-    .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fact{appearance:none;background:#f5faf6;border:2px solid #e2eee4;border-radius:22px;min-height:123px;display:grid;place-content:center;gap:4px;padding:10px 5px;width:100%;transition:transform .2s,background .2s}
-    .fact:active{transform:scale(.98)}.fact.swapped{background:#f7f0ff;border-color:#dfd2f7}.equation{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:6px;min-width:0}.equal{color:#e5a04e;font-size:28px;font-weight:950;flex:none}
-    .objects{display:flex;flex-wrap:wrap;align-content:center;align-items:center;justify-content:center;gap:1px;max-width:190px;min-width:0}.object{font-size:clamp(26px,4vw,38px);line-height:1.15;display:inline-block;filter:drop-shadow(0 2px 2px #0001)}.fact .object{font-size:clamp(26px,3.7vw,37px)}
-    .fact .swap{font-size:20px;color:#7a9f98;line-height:1}.fact.swapped .swap{color:#9275bd}
-    .game{margin-top:17px}.game-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .hint-toggle{background:#fff5d9;border:1.5px solid #ecd69f;border-radius:15px;padding:9px 14px;font-size:23px;min-height:48px;min-width:55px}
-    .visual-question{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 8px;min-height:91px;background:#fffbf0;border:2px dashed #f0e1b5;border-radius:24px;padding:14px 10px;width:100%}
-    .visual-question .object{font-size:clamp(42px,8vw,62px)}.q-mark{border:2px solid #edc872;border-radius:14px;padding:4px 12px;background:white;color:#e39c35;font-weight:950;font-size:38px;min-width:51px;text-align:center}
-    .visual-question .equal{font-size:35px}
-    .tutorial{background:#fcf9ec;border:1.5px dashed #e7d6ab;border-radius:22px;padding:12px 12px 15px;margin:12px 0}
-    .tutorial-tools{display:flex;align-items:center;justify-content:space-between;gap:8px}.round{background:white;border:1.5px solid #dfd9bf;border-radius:14px;min-width:45px;min-height:43px;font-size:22px;color:#577668}.stage-counter{font-weight:900;color:#9a7743;font-size:15px}
-    .tutorial-scene{display:grid;place-items:center;min-height:137px;overflow:hidden}.scene-equation{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%;animation:appear .4s ease-out}.scene-equation .objects{max-width:350px}.scene-equation .object{font-size:clamp(32px,5.8vw,46px)}
-    .scene-split{width:100%;animation:appear .5s ease}.split-row{display:grid;grid-template-columns:1fr 27px 1fr;align-items:center;gap:5px}.split-side{display:grid;grid-template-columns:repeat(var(--parts),minmax(0,1fr));gap:5px}.split-group{min-height:75px;display:flex;align-items:center;justify-content:center;gap:0;background:#fff;border:2px solid #e9cc99;border-radius:16px;padding:5px 2px;animation:fan-out .6s both;animation-delay:calc(var(--group) * 120ms)}.split-side.left .split-group{border-color:#b7dfca;background:#edf9f1}.split-group .object{font-size:clamp(22px,4vw,33px)}.split-symbol{font-size:25px;color:#e4a64d;font-weight:950;text-align:center}.split-focus{box-shadow:0 0 0 4px #f4d37e;border-color:#deb15d!important}
-    /* Gợi ý trực quan: gom nhóm -> từng cặp biến mất -> vật tương đương xuất hiện tại chỗ. */
-    .scene-replacement{width:100%;display:grid;justify-items:center;gap:12px;animation:appear .35s ease-out}
-    .swap-legend{display:flex;align-items:center;justify-content:center;gap:9px;background:#fff;border:1.5px solid #e8d6a8;border-radius:999px;padding:4px 14px;max-width:100%}
-    .swap-legend .objects{max-width:none}.swap-legend .object{font-size:clamp(28px,5vw,39px)}
-    .swap-legend .swap-arrow{font-size:26px;line-height:1;color:#c18c3e;font-weight:900}
-    .group-equation{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;width:100%}
-    .group-equation .base-item{flex:none;display:flex;align-items:center;justify-content:center}.group-equation .base-item .object{font-size:clamp(37px,6.5vw,54px)}
-    .group-row{display:flex;align-items:stretch;justify-content:center;gap:9px;max-width:100%;flex-wrap:wrap}
-    .substitution-group{border:2px solid #e6bf83;background:#fff9e9;border-radius:17px;min-width:90px;min-height:83px;padding:10px 8px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 3px 0 #f4e5c7;animation:fan-out .48s both;animation-delay:calc(var(--group) * 90ms)}
-    .substitution-group .objects{max-width:none}.substitution-group .object{font-size:clamp(30px,5.1vw,44px)}
-    .substitution-group.group-finished{background:#ecf9ee;border-color:#9dd9b5}
-    .substitution-group.group-current{background:#effff2;border-color:#28a97f;box-shadow:0 0 0 4px #91dfb277}
-    .swap-slot{position:relative;min-width:82px;min-height:53px;display:grid;place-items:center;overflow:visible}
-    .swap-slot .old-items,.swap-slot .new-items{grid-area:1/1;display:flex;justify-content:center;align-items:center;white-space:nowrap}
-    .swap-slot .old-items{z-index:2}.swap-slot .new-items{z-index:1;opacity:0}
-    .swap-slot.animate .old-items{animation:lift-away .55s .50s ease-in forwards}
-    .swap-slot.animate .new-items{animation:drop-in .60s 1.08s cubic-bezier(.2,1.25,.3,1) forwards}
-    .swap-slot.static .old-items{display:none}.swap-slot.static .new-items{opacity:1}
-    .hint-replay{font-size:20px}
-    @keyframes lift-away{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-20px) scale(.55)}}
-    @keyframes drop-in{0%{opacity:0;transform:translateY(-20px) scale(.6)}100%{opacity:1;transform:translateY(0) scale(1)}}
-    .scale-board{height:290px;border-radius:25px;background:linear-gradient(145deg,#e8f5ff,#f5fbfb 55%,#fff5df);position:relative;isolation:isolate;overflow:hidden}
-    .scale-board:after{content:"";position:absolute;bottom:0;left:0;right:0;height:37px;background:#e8f0dc;border-top:2px solid #d3e3d2;z-index:-1}
-    .scale{position:absolute;inset:8px 0 26px}.post{position:absolute;left:calc(50% - 7px);width:14px;height:183px;bottom:0;border-radius:15px;background:linear-gradient(90deg,#d9a276,#a46b4b)}.post:after{content:"";position:absolute;width:100px;height:17px;border-radius:15px;background:#c68d6a;bottom:-5px;left:50%;transform:translateX(-50%)}
-    .beam{position:absolute;left:7%;width:86%;height:11px;top:77px;border-radius:15px;background:#b88a63;box-shadow:0 3px 0 #986b4e;transform:rotate(var(--tilt,-9deg));transform-origin:center;transition:transform .62s cubic-bezier(.2,1,.24,1);z-index:2}.pivot{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:33px;height:33px;border-radius:50%;border:7px solid #f9c96f;background:#93614c;z-index:3}
-    .hanger{position:absolute;top:7px;width:41%;height:160px;display:flex;align-items:center;flex-direction:column}.hanger.left{left:-1%}.hanger.right{right:-1%}.rope{height:40px;width:3px;flex:none;background:#a77a58}
-    .pan{width:100%;max-width:235px;min-height:94px;height:94px;background:#fffdf4;border:4px solid #ae7953;border-top:0;border-radius:8px 8px 30px 30px;box-shadow:0 5px 0 #cea27b;display:flex;flex-wrap:wrap;align-items:center;align-content:center;justify-content:center;gap:0;padding:9px 4px;position:relative;transform:rotate(calc(-1 * var(--tilt,-9deg)));transition:transform .62s cubic-bezier(.2,1,.24,1)}.pan:before{content:"";position:absolute;top:-6px;left:-5px;right:-5px;height:8px;border-radius:9px;background:#af7950}
-    .pan .object{font-size:clamp(29px,5.4vw,43px)}.pan .removable{background:none;border:0;padding:0;border-radius:9px;line-height:1;min-width:33px;min-height:37px}.pan .removable:active{background:#ffe1c9}.pan .empty{font-size:48px;color:#d9d4be}
-    .balance-badge{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);border-radius:99px;padding:4px 18px;font-size:26px;background:#fff;border:1px solid #dbe8dd;box-shadow:0 2px 8px #0001;white-space:nowrap}.balance-badge.balanced{background:#e3f8e3}
-    .controls{display:flex;align-items:stretch;gap:12px;margin-top:13px}.add{display:flex;align-items:center;justify-content:center;gap:13px;flex:1;background:#ffdf9a;border:2px solid #e9b85d;border-radius:22px;min-height:84px;box-shadow:0 4px 0 #d9ab5a}.add .object{font-size:48px}.add .plus{font-size:35px;font-weight:900;color:#ad6c27}.mini-controls{display:flex;gap:9px}.mini-controls button{background:#f7f9f7;border:1.5px solid #e0e7dd;border-radius:19px;min-width:65px;min-height:76px;font-weight:900;font-size:31px;color:#537368}
-    .feedback{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0}
-    /* Chạm hoặc kéo vật lớn lên đĩa phải; không dùng nút +/- trong giao diện bé. */
-    .controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:stretch}
-    .object-source{min-height:122px;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff2cc;border:3px dashed #dfb457;border-radius:24px;box-shadow:0 4px 0 #e3c17e;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;position:relative}
-    .object-source:active{cursor:grabbing}.object-source .object{font-size:clamp(76px,11vw,108px);line-height:1;pointer-events:none}
-    .source-arrow{font-size:39px;color:#ab7949;pointer-events:none;transform:rotate(-34deg)}
-    .control-actions{display:flex;flex-direction:column;gap:9px}.check{background:#168570;color:#fff;border:0;border-radius:21px;min-height:73px;min-width:147px;font-size:20px;font-weight:850;box-shadow:0 5px 0 #086e5c}
-    .check .check-mark{font-size:27px;margin-right:5px}.reset{background:#f6faf6;border:1.5px solid #dfe9e2;border-radius:15px;min-height:42px;font-size:25px;color:#577568}
-    .check.wobble{animation:wobble .44s ease}.pan.drop-active{border-color:#43b78d;background:#e5fff1;box-shadow:0 0 0 6px #9be0bd88,0 5px 0 #cea27b}
-    .pan.drop-ready{border-color:#16986e;background:#d9ffe8;box-shadow:0 0 0 7px #63d99988,0 5px 0 #cea27b}
-    .right-pan-target{border-radius:0 0 25px 25px}.pan .empty{font-size:56px;color:#9cbda9}
-    .pan .removable{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}.pan .removable .object{pointer-events:none}
-    .drag-ghost{position:fixed;left:0;top:0;z-index:50;pointer-events:none;font-size:85px;line-height:1;filter:drop-shadow(0 14px 12px #304f4f44);transform:translate(-50%,-55%) scale(1.12)}
-    .dragging{cursor:grabbing!important}.dragging .object{opacity:.68}
-    .check-feedback{display:flex;align-items:center;justify-content:center;min-height:30px;font-size:27px;margin-top:8px;color:#527c70}
-    .check-feedback:empty{min-height:0;margin:0}
-    .success-panel{border:2px solid #b9e9ca;border-radius:25px;background:#f0fff3;margin-top:13px;padding:15px 12px;text-align:center;animation:appear .35s ease}
-    .success-stars{display:flex;justify-content:center;gap:9px;font-size:22px;line-height:1.1}
-    .success-equation{display:flex;justify-content:center;align-items:center;gap:8px;margin:12px auto;max-width:100%}
-    .success-equation .objects{max-width:245px}.success-equation .object{font-size:clamp(60px,8.5vw,80px);line-height:1.15}.success-equation .equal{font-size:37px}
-    .next{border:0;border-radius:17px;background:var(--green);color:white;font-size:32px;min-width:116px;min-height:56px;box-shadow:0 4px 0 #076e5d}
-    @keyframes wobble{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
-    @media(max-width:600px){.controls{grid-template-columns:minmax(0,1fr) 120px;gap:9px}.object-source{min-height:114px;gap:0}.object-source .object{font-size:clamp(72px,18vw,94px)}.source-arrow{font-size:32px}.control-actions{gap:7px}.check{min-width:0;min-height:69px;font-size:16px;border-radius:17px}.reset{min-height:39px}.visual-question .object{font-size:clamp(54px,13vw,72px)}.success-equation .object{font-size:clamp(56px,16vw,74px)}.success-equation .objects{max-width:190px}.success-equation{gap:6px}.pan .removable{min-width:33px;min-height:39px}}
-    @media(max-width:360px){.controls{grid-template-columns:minmax(0,1fr) 107px}.object-source .object{font-size:68px}.source-arrow{font-size:25px}.check{font-size:14px}.success-equation .object{font-size:49px}.success-equation .objects{max-width:154px}}
-
-    .overlay{position:fixed;inset:0;background:#173638a8;z-index:20;display:grid;place-items:center;padding:16px;overflow:auto}.dialog{background:#fff;border-radius:29px;box-shadow:0 16px 80px #112a3433;width:min(680px,100%);max-height:min(90vh,900px);overflow:auto;padding:22px}.dialog-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.dialog-header h2{font-size:22px;margin:0}.close{border:1px solid #e0e9e0;background:#f9faf8;border-radius:13px;font-size:25px;width:48px;height:48px}
-    .parent-text{font-size:15px;line-height:1.6;color:#415b61}.guide{border:1.5px solid #e4eee3;border-radius:18px;background:#f6faf6;padding:13px 15px;margin:10px 0 19px}.guide p{margin:5px 0}.parent-step{border:1.5px solid #e4e8e1;border-radius:18px;padding:13px;margin:9px 0;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start}.step-number{display:grid;place-items:center;background:#dbf1e8;border-radius:11px;width:32px;height:32px;font-weight:900;color:#136b5b}.parent-step p{margin:0 0 10px;color:#435f62;font-size:14px;line-height:1.55}.parent-step .scene-equation .object{font-size:31px}.parent-step .scene-split .object{font-size:26px}.parent-step .split-group{min-height:60px}.parent-step .scene-equation{justify-content:flex-start}
-    .parent-footer{font-size:13px;color:#6b7e82;line-height:1.5;border-top:1px solid #e8eee8;padding-top:12px;margin-top:18px}
-    /* Kết quả chỉ hiện sau khi bé chủ động Kiểm tra. */
-    footer{text-align:center;color:#8a9895;font-size:12px;margin:22px 0 0}
-    @keyframes appear{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:scale(1)}} @keyframes fan-out{from{opacity:.25;transform:translateX(calc(var(--shift) * -22px)) scale(.88)}to{opacity:1;transform:translateX(0) scale(1)}} @keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
-    @media(max-width:600px){.app{padding:10px 11px 30px}.logo{font-size:18px}.logo-mark{font-size:24px;padding:8px}.head-controls{gap:6px}.parent-button{font-size:12px;padding:9px 10px}.card{padding:13px;border-radius:22px}.facts{gap:8px}.fact{min-height:112px;border-radius:18px;padding:6px 3px}.fact .object{font-size:clamp(24px,6.2vw,33px)}.fact .equal{font-size:24px}.fact .swap{font-size:17px}.visual-question{min-height:82px}.visual-question .object{font-size:48px}.q-mark{font-size:33px}.scale-board{height:271px}.hanger{width:43%}.hanger.left{left:-2%}.hanger.right{right:-2%}.pan{height:85px;min-height:85px}.pan .object{font-size:clamp(25px,8vw,35px)}.pan .removable{min-width:27px;min-height:31px}.controls{gap:8px}.add{min-height:76px}.mini-controls{gap:6px}.mini-controls button{min-width:55px;min-height:75px}.split-row{grid-template-columns:1fr;gap:5px}.split-symbol{font-size:23px}.split-group{min-height:52px;padding:4px 2px}.split-group .object{font-size:clamp(22px,6.5vw,30px)}.tutorial-scene{min-height:180px}.dialog{padding:16px}.parent-step{padding:10px}}
-    @media(max-width:600px){.group-equation{gap:5px}.group-row{gap:5px}.substitution-group{min-width:66px;min-height:69px;padding:5px 3px;border-radius:12px}.substitution-group .object{font-size:clamp(25px,6.4vw,34px)}.swap-slot{min-width:65px;min-height:47px}.group-equation .base-item .object{font-size:37px}.swap-legend .object{font-size:28px}.scene-replacement{gap:8px}}
-    @media(max-width:360px){.substitution-group{min-width:58px}.substitution-group .object{font-size:24px}.group-row{gap:3px}.group-equation{gap:3px}.swap-slot{min-width:58px}}
-    @media(max-width:360px){.logo{font-size:16px}.parent-button{font-size:11px}.fact .object{font-size:22px}.pan .object{font-size:24px}.split-group .object{font-size:18px}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8f7ef">
+<meta name="description" content="52 bài toán tư duy tương tác theo 17 trang tài liệu, mỗi lượt 5 câu.">
+<title>Cân vui · Bé học toán</title>
+<style>
+:root{--ink:#294248;--muted:#68808a;--green:#0f8775;--green-dark:#08695c;--gold:#eeb648;--paper:#f8f7ef;--line:#dfeae3;--shadow:0 12px 34px #214b3811}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 0 1%,#e8f6ef,transparent 40%),radial-gradient(circle at 100% 0,#fff0d8,transparent 42%),var(--paper);font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:var(--ink)}
+button{font:inherit;cursor:pointer;touch-action:manipulation;color:inherit}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible{outline:3px solid #ffc861;outline-offset:2px}[hidden]{display:none!important}.sr{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}
+.app{max-width:1000px;margin:auto;padding:16px 17px 38px}.header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 13px}.brand{font-size:23px;font-weight:900;letter-spacing:-.04em;display:flex;align-items:center;gap:7px}.brand .brand-icon{display:grid;place-items:center;width:45px;height:45px;border-radius:14px;background:#e1f4e4}.header-right{display:flex;align-items:center;gap:8px}.chrome-button,.parents{min-height:45px;border:1.5px solid #d9e8dc;border-radius:14px;background:#fff;box-shadow:0 3px 0 #d9e6d7;font-weight:800;padding:6px 12px}.chrome-button{font-size:24px}.parents{font-size:13px}
+.card{background:#fff;border:1.5px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:18px}.session{display:flex;justify-content:center;align-items:center;gap:9px;margin:6px 0 11px}.session .nav-arrow{border:1.5px solid #d9e4d9;background:#fff;border-radius:14px;width:43px;height:43px;font-size:25px;line-height:1}.round-num{border-radius:99px;padding:8px 17px;background:#dff3e7;color:var(--green-dark);font-weight:900;font-size:15px}.progress{display:flex;gap:9px;justify-content:center;margin:0 0 15px;align-items:center}.dot{min-width:37px;height:37px;padding:0 7px;border-radius:12px;border:1.5px solid #d7e6d7;background:#fff;font-weight:900;color:#4c8073;font-size:15px}.dot.active{background:var(--green);color:white;box-shadow:0 3px 0 var(--green-dark)}.dot.done:not(.active){background:#dbf7dd;color:#157b56}
+.facts-card{padding:15px}.top-line{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:35px}.top-line .marker{font-size:27px}.top-line .source{font-size:11px;color:var(--muted);font-weight:650}.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fact{width:100%;min-height:117px;border:2px solid #e2eee6;border-radius:21px;background:#f4faf6;padding:9px 8px;display:grid;place-items:center;gap:5px}.fact.swapped{background:#f8f3ff;border-color:#ded2f3}.fact .swap-sign{font-size:18px;color:#82aaa1;line-height:1}.facts.many{grid-template-columns:1fr;gap:8px}.facts.many .fact{min-height:70px;padding:8px}
+.expr{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;max-width:100%;min-width:0}.expr .op{font-size:27px;color:#e4a03c;font-weight:950;line-height:1}.expr .eq{font-size:28px;color:#e19e3d;font-weight:950}.items{display:inline-flex;align-items:center;justify-content:center;gap:2px;flex-wrap:wrap;min-width:0;max-width:100%}.obj{display:inline-block;font-size:clamp(27px,4.5vw,43px);line-height:1.17;filter:drop-shadow(0 2px 2px #0001)}.fact .obj{font-size:clamp(26px,3.8vw,38px)}.items.many .obj{font-size:clamp(22px,3.5vw,34px)}.num{font-weight:950;font-size:clamp(27px,5vw,43px);color:#276d6c}.question .obj{font-size:clamp(41px,8vw,65px)}.qmark{font-size:38px;font-weight:900;border:2px solid #f0c86b;color:#da9839;border-radius:13px;background:white;min-width:56px;min-height:55px;display:grid;place-items:center}.question .op{font-size:34px}
+.obj svg{width:1.12em;height:1.12em;display:block}.obj:has(svg){vertical-align:middle}.obj[data-item='smile']{filter:hue-rotate(335deg)}.obj[data-item='diamondGreen']{filter:hue-rotate(102deg)}.obj[data-item='fruitTree']{position:relative}.obj[data-item='fruitTree']:after{content:'🍎';position:absolute;top:0;right:-.25em;font-size:.4em;filter:none}.obj[data-item='giftBlue']{filter:hue-rotate(163deg) saturate(1.7)}.obj[data-item='giftDark']{filter:hue-rotate(90deg) saturate(.65) brightness(.66)}.obj[data-item='candyB']{filter:hue-rotate(130deg) saturate(1.8)}.obj[data-item='chiliGreen']{filter:hue-rotate(118deg) saturate(1.35)}.obj[data-item='chiliYellow']{filter:hue-rotate(57deg) saturate(1.35)}.obj[data-item='giftYellow']{filter:hue-rotate(27deg) saturate(1.25)}
+.game{margin-top:16px}.game-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.game-head .marker{font-size:28px}.hint-toggle{border-radius:14px;border:1.5px solid #efd69a;background:#fff6dc;min-width:53px;min-height:49px;font-size:24px}.question{min-height:104px;padding:13px 10px;margin:7px 0 12px;background:#fffbef;border:2px dashed #eedba7;border-radius:24px;display:grid;place-items:center}.question .expr{gap:10px}
+.hints{border-radius:22px;background:#fcf9eb;border:1.5px dashed #e4d6a8;padding:11px;margin:0 0 14px}.hint-tools{display:flex;align-items:center;justify-content:space-between;gap:7px}.tool{min-height:43px;min-width:45px;border:1.5px solid #e7dec5;background:#fff;border-radius:13px;font-size:24px}.hint-tools .counter{font-weight:900;color:#a47d38;font-size:15px}.hint-scene{min-height:138px;display:grid;place-items:center;overflow:hidden;padding:10px 4px}.hint-scene .expr{max-width:100%}.hint-scene .obj{font-size:clamp(26px,5vw,43px)}.hint-scene .many .obj{font-size:clamp(23px,4vw,34px)}
+.replace-scene{display:grid;gap:10px;place-items:center;width:100%}.swap-legend{display:flex;align-items:center;justify-content:center;gap:6px;background:white;border:1px solid #e6d1a4;border-radius:99px;padding:6px 12px;max-width:100%}.swap-legend .obj{font-size:clamp(22px,4vw,33px)}.swap-legend .arrow{font-size:23px;color:#d59b45}.replace-main{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;width:100%}.replace-main .objects-row{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}.swap-slot{border:2.5px solid #6fc3a5;border-radius:18px;min-width:75px;min-height:75px;padding:8px;background:#effef3;display:grid;place-items:center;position:relative}.swap-slot .old-items,.swap-slot .new-items{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:2px;white-space:nowrap}.swap-slot .old-items{z-index:2}.swap-slot .new-items{opacity:0;z-index:1}.swap-slot.animate .old-items{animation:away .58s 0.6s both}.swap-slot.animate .new-items{animation:arrive .58s 1.15s both}.swap-slot.static .old-items{display:none}.swap-slot.static .new-items{opacity:1}@keyframes away{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-17px) scale(.35);opacity:0}}@keyframes arrive{0%{transform:translateY(-18px) scale(.45);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
+.group-scene{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;width:100%}.group-box{display:flex;align-items:center;justify-content:center;gap:0;border:2px solid #e8c78c;background:#fff;border-radius:15px;padding:10px 5px;min-height:72px;min-width:67px;animation:fan .35s ease-out backwards;animation-delay:calc(var(--n)*120ms)}.group-box .obj{font-size:clamp(22px,4vw,37px)}@keyframes fan{from{opacity:.2;transform:translateX(-10px)}to{opacity:1;transform:none}}.split-scene{width:100%;display:grid;gap:8px}.split-side{display:grid;grid-template-columns:repeat(var(--parts),minmax(0,1fr));gap:6px}.split-side .group-box{min-width:0;padding:7px 2px;background:#f1fbf3;border-color:#addac0}.split-side.right .group-box{background:#fff9ea;border-color:#f0d69d}.split-equals{text-align:center;font-size:21px;color:#cf9341;font-weight:900;line-height:1}.split-side .group-box:first-child{box-shadow:0 0 0 3px #e9c873}
+.math-dots{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}.dot-group{background:#fff;border:2px solid #eaca82;border-radius:16px;min-width:65px;min-height:69px;padding:7px;display:flex;align-content:center;align-items:center;justify-content:center;flex-wrap:wrap;gap:0}.dot-group .count-dot{width:13px;height:13px;background:#eac04f;border-radius:50%;box-shadow:0 2px #b78f27;margin:2px}.math-steps{display:grid;gap:12px;justify-items:center}.math-steps .expr{gap:7px}
+.scale-board{height:270px;position:relative;overflow:hidden;border-radius:25px;background:linear-gradient(140deg,#e5f4ff,#f5fafb 56%,#fff4dc);isolation:isolate}.scale-board:after{content:'';position:absolute;bottom:0;left:0;right:0;height:33px;background:#e0f1e5}.scale{position:absolute;inset:0}.post{position:absolute;bottom:30px;left:calc(50% - 10px);height:153px;width:20px;background:#a4b298;border-radius:8px;z-index:1}.post:after{content:'';position:absolute;bottom:0;left:-30px;width:80px;height:15px;background:#8e9b87;border-radius:14px}.beam{position:absolute;left:12%;right:12%;top:78px;height:12px;background:#a0a98c;border:1px solid #778570;border-radius:99px;transform-origin:center;transform:rotate(var(--tilt));transition:transform .72s cubic-bezier(.2,.7,.2,1);z-index:3}.beam:after{content:'';width:17px;height:17px;position:absolute;left:calc(50% - 9px);top:-5px;background:#e8c07c;border:3px solid #786945;border-radius:50%}.hanger{position:absolute;top:9px;width:34%;height:156px}.hanger.left{left:1%}.hanger.right{right:1%}.rope{position:absolute;top:0;height:85px;width:3px;background:#859386;left:50%;transform:translateX(-50%)}.pan{position:absolute;top:78px;left:0;width:100%;min-height:90px;padding:6px 4px;display:flex;align-items:center;align-content:center;justify-content:center;flex-wrap:wrap;border-radius:9px 9px 39px 39px;border:4px solid #879889;border-top:9px solid #829587;background:#b9dcca80;gap:0;transition:background .2s,border-color .2s;touch-action:none}.pan .obj{font-size:clamp(24px,4.5vw,38px)}.pan .items{max-width:100%}.pan .items.many .obj{font-size:clamp(18px,3.3vw,29px)}.pan .remove-item{border:0;background:transparent;padding:0;touch-action:none}.pan.drop-ready{background:#c4ffcf;border-color:#39b989}.balance-badge{position:absolute;z-index:5;bottom:6px;left:50%;transform:translateX(-50%);font-size:23px;background:#e4f8f0c9;border-radius:20px;padding:2px 10px}.balance-badge.equal{background:#dcf9e1}
+.controls{display:flex;gap:10px;align-items:stretch;margin-top:13px}.source-piece{flex:1;min-height:84px;border:2px solid #e2ca7e;border-radius:23px;background:#fff7db;display:flex;justify-content:center;align-items:center;gap:12px;touch-action:none}.source-piece .obj{font-size:62px}.source-piece .arrow{color:#aa905a;font-size:32px;font-weight:900}.source-piece.dragging{opacity:.5}.actions{display:grid;grid-template-columns:auto auto;gap:8px}.check-button{border:0;border-bottom:5px solid #0a655a;background:#168a77;color:white;font-size:19px;font-weight:950;border-radius:18px;padding:10px 17px;min-width:130px}.reset{border:1.5px solid #d6e5de;background:#f5faf8;border-radius:17px;font-size:29px;min-width:54px}.drag-ghost{position:fixed;left:0;top:0;transform:translate(-50%,-50%);z-index:9999;pointer-events:none;font-size:75px;filter:drop-shadow(0 5px 8px #0004)}.number-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}.number-option{border-radius:20px;border:2px solid #e2e9e0;background:#f6faf6;min-height:82px;font-size:39px;font-weight:950;color:#337a74}.number-option.selected{border-color:#0d927e;background:#ddf8e9;box-shadow:0 0 0 4px #8fd5ac44}.number-actions{display:flex;gap:10px;align-items:center;justify-content:center}.number-actions .check-button{min-height:65px;flex:1}.number-actions .reset{min-height:65px}
+.feedback{min-height:22px;text-align:center;color:#6f8790;font-size:13px;margin-top:8px}.feedback.err{color:#bb7942}.success{background:#edf9ef;border:1.5px solid #c4e8cf;border-radius:23px;padding:12px 10px;display:grid;gap:5px;place-items:center;margin-top:13px}.stars{font-size:20px;letter-spacing:2px}.success .expr .obj{font-size:clamp(39px,7vw,58px)}.success .expr{max-width:100%}.next{min-width:86px;min-height:52px;background:#188b78;border:0;border-bottom:4px solid #0b6459;border-radius:17px;color:white;font-size:32px}.round-complete{font-size:13px;font-weight:900;color:#17826d}.footer{text-align:center;font-size:12px;color:#84989a;padding:21px 0}
+.overlay{position:fixed;inset:0;background:#1e3338aa;z-index:50;display:grid;place-items:center;padding:16px}.dialog{background:white;width:min(720px,100%);max-height:min(94vh,940px);overflow:auto;border-radius:24px;padding:20px}.dialog-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.dialog h2{font-size:22px;margin:0}.dialog h3{margin:16px 0 7px;font-size:17px}.close{background:#f1f5f1;border:1px solid #dce5d9;border-radius:13px;font-size:27px;width:46px;height:45px}.parent-text{font-size:14px;color:#637b7e;line-height:1.6}.parent-guide{background:#f7faee;border-radius:16px;padding:12px 16px}.parent-guide p{margin:6px 0}.source-note{background:#fff4e7;border:1.5px solid #eec791;padding:11px 13px;border-radius:16px;color:#865b27;font-size:14px;line-height:1.5}.parent-step{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;border-top:1px solid #e7eee9;padding:13px 0}.step-index{background:#e5f3e9;color:#16846c;font-weight:900;border-radius:10px;text-align:center;padding:5px}.parent-step p{font-size:14px;line-height:1.55;margin:0 0 8px}.parent-step .hint-scene{min-height:70px;border:1px dashed #e6e8d6;border-radius:12px}.parent-step .hint-scene .obj{font-size:30px}.parent-step .hint-scene .group-box .obj{font-size:24px}.parent-foot{color:#819091;font-size:12px;padding:8px 0}
+@media(max-width:600px){.app{padding:10px 10px 30px}.header{margin-bottom:6px}.brand{font-size:20px}.brand .brand-icon{width:39px;height:39px}.parents{padding:7px 9px;font-size:12px}.chrome-button{padding:4px 10px;min-height:40px}.session{margin:3px 0 9px}.progress{gap:8px;margin-bottom:10px}.dot{min-width:33px;height:34px}.card{padding:13px;border-radius:22px}.facts-card{padding:12px}.fact{min-height:87px;border-radius:18px;padding:6px 4px}.fact .obj{font-size:clamp(19px,5.3vw,30px)}.fact .op,.fact .eq{font-size:22px}.fact .expr{gap:3px}.facts{gap:7px}.game{margin-top:12px}.question{min-height:88px;padding:8px 5px}.question .obj{font-size:clamp(33px,8.6vw,50px)}.question .expr{gap:5px}.question .qmark{font-size:31px;min-height:45px;min-width:45px}.question .op{font-size:26px}.scale-board{height:244px}.beam{top:70px}.pan{min-height:80px;top:75px}.post{height:132px}.source-piece{min-height:79px}.source-piece .obj{font-size:51px}.check-button{min-width:115px;font-size:16px;padding:8px}.hint-scene .obj{font-size:clamp(26px,6vw,36px)}.replace-main .obj{font-size:clamp(24px,6vw,35px)}.group-box .obj{font-size:clamp(21px,5.7vw,32px)}.replace-main{gap:4px}.swap-slot{min-height:67px;min-width:64px}.number-option{min-height:72px;font-size:36px}}
+@media(max-width:360px){.brand{font-size:18px}.parents{font-size:10px}.fact .obj{font-size:20px}.facts{gap:5px}.fact .eq{font-size:19px}.question .obj{font-size:36px}.obj{font-size:25px}.split-side{gap:3px}.split-side .group-box .obj{font-size:18px}.group-box{min-width:49px;padding:6px 2px}.group-box .obj{font-size:22px}.hint-scene{min-height:142px}.hint-scene .expr{gap:3px}.swap-legend .obj{font-size:21px}.pan .obj{font-size:24px}.source-piece .obj{font-size:46px}.check-button{min-width:106px;font-size:14px}}
+@media(prefers-reduced-motion:reduce){*,*:after,*:before{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
 <div class="app">
-  <header>
-    <div class="logo"><span class="logo-mark" aria-hidden="true">⚖️</span><span>Cân vui</span></div>
-    <div class="head-controls">
-      <button id="speak" class="icon-button" type="button" aria-label="Nghe câu hỏi" title="Nghe câu hỏi">🔊</button>
-      <button id="parentOpen" class="parent-button" type="button">👨‍👩‍👧 Bố mẹ</button>
-    </div>
-  </header>
-  <nav id="progress" class="progress" aria-label="Chọn bài tập"></nav>
-  <main>
-    <section class="card" aria-label="Hai phép cân mẫu">
-      <div class="section-row"><span class="section-emoji" role="img" aria-label="Nhìn các cân mẫu">👀</span><span class="sr-only">Chạm vào một phép cân mẫu để đổi vị trí hai bên</span></div>
-      <div class="facts" id="facts"></div>
-    </section>
-    <section class="card game" aria-label="Bài tập cân bằng">
-      <div class="game-top"><span class="section-emoji" role="img" aria-label="Đến lượt con">🎯</span><button type="button" id="hintToggle" class="hint-toggle" aria-label="Xem gợi ý bằng hình" aria-expanded="false">💡</button></div>
-      <div class="visual-question" id="question" aria-label="Câu hỏi bằng hình ảnh"></div>
-      <section class="tutorial" id="tutorial" aria-label="Gợi ý từng bước bằng hình ảnh" hidden>
-        <div class="tutorial-tools"><button type="button" id="prevHint" class="round" aria-label="Bước trước">‹</button><span id="hintCounter" class="stage-counter" aria-live="polite"></span><button type="button" id="hintReplay" class="round hint-replay" aria-label="Xem lại chuyển động">↻</button><button type="button" id="nextHint" class="round" aria-label="Bước tiếp theo">›</button></div>
-        <div class="tutorial-scene" id="hintScene"></div>
-      </section>
-      <div class="scale-board" role="group" aria-label="Cân thăng bằng tương tác">
-        <div class="scale"><div class="post"></div><div class="beam" id="beam"><div class="pivot"></div><div class="hanger left"><div class="rope"></div><div class="pan" id="leftPan" aria-label="Đĩa cân trái"></div></div><div class="hanger right"><div class="rope"></div><div class="pan" id="rightPan" aria-label="Đĩa cân phải, chạm vào vật để bớt"></div></div></div></div>
-        <div class="balance-badge" id="balanceBadge" aria-hidden="true">↙️</div>
-      </div>
-      <div class="controls">
-        <button id="pieceSource" class="object-source" type="button" aria-label="Chạm để thêm vật, hoặc kéo lên đĩa bên phải"><span class="object" id="piece" aria-hidden="true">🌽</span><span class="source-arrow" aria-hidden="true">↗</span></button>
-        <div class="control-actions"><button id="check" class="check" type="button" aria-label="Kiểm tra đáp án"><span class="check-mark" aria-hidden="true">✓</span> Kiểm tra</button><button id="reset" class="reset" type="button" aria-label="Chơi lại từ đầu">↻</button></div>
-      </div>
-      <div id="checkFeedback" class="check-feedback" role="status" aria-live="polite"></div>
-      <div id="successPanel" class="success-panel" hidden>
-        <div class="success-stars" aria-label="Ba ngôi sao">⭐ ⭐ ⭐</div>
-        <div id="solvedEquation" class="success-equation"></div>
-        <button type="button" id="nextLevel" class="next" aria-label="Sang bài tiếp theo" title="Sang bài tiếp theo">➜</button>
-      </div>
-      <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
-    </section>
-  </main>
-  <footer>Không tài khoản · Không quảng cáo · Không gửi dữ liệu</footer>
+<header class="header"><div class="brand"><span class="brand-icon">⚖️</span><span>Cân vui</span></div><div class="header-right"><button id="speak" class="chrome-button" aria-label="Nghe câu hỏi">🔊</button><button id="parentOpen" class="parents">👨‍👩‍👧 Bố mẹ</button></div></header>
+<nav aria-label="Chọn lượt" class="session"><button class="nav-arrow" id="prevRound" aria-label="Lượt trước">‹</button><span id="roundLabel" class="round-num"></span><button class="nav-arrow" id="nextRound" aria-label="Lượt sau">›</button></nav>
+<nav id="progress" class="progress" aria-label="Chọn câu trong lượt"></nav>
+<main>
+<section class="card facts-card" aria-label="Các cân mẫu và phép tính đã cho"><div class="top-line"><span class="marker">👀</span><span id="sourcePage" class="source"></span></div><div id="facts" class="facts"></div></section>
+<section class="card game"><div class="game-head"><span class="marker">🎯</span><button id="hintToggle" class="hint-toggle" aria-expanded="false" aria-label="Xem gợi ý bằng hình">💡</button></div>
+<div id="question" class="question" aria-label="Câu hỏi bằng hình"></div>
+<section id="hints" class="hints" hidden><div class="hint-tools"><button id="hintBack" class="tool" aria-label="Bước trước">‹</button><span id="hintIndex" class="counter"></span><button id="hintReplay" class="tool" aria-label="Phát lại bước">↻</button><button id="hintNext" class="tool" aria-label="Bước tiếp">›</button></div><div id="hintScene" class="hint-scene"></div></section>
+<div id="scaleBoard" class="scale-board" role="group" aria-label="Cân thăng bằng có thể kéo thả"><div class="scale"><div class="post"></div><div id="beam" class="beam"><div class="hanger left"><div class="rope"></div><div id="leftPan" class="pan" aria-label="Đĩa bên trái"></div></div><div class="hanger right"><div class="rope"></div><div id="rightPan" class="pan" aria-label="Đĩa bên phải"></div></div></div></div><div id="balanceBadge" class="balance-badge"></div></div>
+<div id="weightControls" class="controls"><button id="pieceSource" class="source-piece" aria-label="Kéo hoặc chạm để thêm vật"><span id="piece" class="obj"></span><span class="arrow">↗</span></button><div class="actions"><button id="weightCheck" class="check-button">✓ Kiểm tra</button><button id="weightReset" class="reset" aria-label="Chơi lại">↻</button></div></div>
+<div id="mathControls" hidden><div id="numberOptions" class="number-options" aria-label="Chọn đáp án"></div><div class="number-actions"><button id="mathCheck" class="check-button">✓ Kiểm tra</button><button id="mathReset" class="reset" aria-label="Chọn lại">↻</button></div></div>
+<div id="feedback" class="feedback" aria-live="polite"></div>
+<div id="success" class="success" hidden><div class="stars" aria-label="Ba ngôi sao">⭐ ⭐ ⭐</div><div id="solved" class="expr"></div><div id="roundComplete" class="round-complete" hidden>🎉 ⭐⭐⭐</div><button id="nextQuestion" class="next" aria-label="Câu tiếp theo">➜</button></div>
+</section>
+</main><footer class="footer">52 câu · 5 câu mỗi lượt · Không tài khoản · Không quảng cáo</footer>
 </div>
-<div class="overlay" id="parentOverlay" hidden>
-  <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
-    <div class="dialog-header"><h2 id="parentTitle">👨‍👩‍👧 Góc bố mẹ</h2><button class="close" id="parentClose" type="button" aria-label="Đóng">×</button></div>
-    <div class="guide parent-text"><strong>🌼 Cách chơi (dành cho bố mẹ)</strong><p>👀 Cho bé nhìn hai cân mẫu ở trên. 👆 Bé kéo đồ vật lớn phía dưới vào đĩa cân bên phải (hoặc chạm để thêm). Có thể chạm vật trên đĩa để bỏ bớt, hoặc kéo vật ra ngoài đĩa. ⚖️ Khi hai đĩa ngang nhau, hãy cho bé ngắm cân một chút, rồi chủ động bấm <strong>✓ Kiểm tra</strong> để xác nhận. Website sẽ không tự hiện kết quả.</p><p>💡 Nếu cần, chạm bóng đèn để xem lần lượt cách thay thế và chia đều bằng hình. Không giới hạn thời gian hay số lần thử. Gợi ý hỏi: “Hai bên có bằng nhau không?”, “Con thay được những món nào?”, “Chúng mình chia đều thành mấy nhóm?”</p></div>
-    <h3 id="lessonTitle" style="font-size:17px;margin:10px 0 6px"></h3>
-    <p id="lessonIntro" class="parent-text" style="margin:0 0 10px"></p>
-    <div id="parentSteps"></div>
-    <div class="parent-footer">Hình vẽ chỉ biểu diễn khối lượng giả định để luyện tư duy, không phải cân nặng thật của các món đồ. Bài tập số 5 là ví dụ mở rộng để luyện chia 3 nhóm.</div>
-  </section>
-</div>
-<!-- Kết quả nằm dưới cái cân để bé luôn nhìn thấy sự thăng bằng, không có popup. -->
-<script>
-'use strict';
-// Các bài 1–4 chuyển thể từ PDF “Phương pháp so sánh và thay thế” do phụ huynh cung cấp.
-// Bài 5 là ví dụ mở rộng do ứng dụng tạo thêm để minh hoạ chia đều thành ba phần.
-const E = (emoji, count = 1) => ({emoji, count});
-const EQ = (left, right, text) => ({kind:'equation',left,right,text});
-const SPLIT = (left, right, parts, text) => ({kind:'split',left,right,parts,text});
-const GROUP = (base, group, parts, text) => ({kind:'group',base,group,parts,text});
-const REPLACE = (base, from, to, parts, replacing, text) => ({kind:'replace',base,from,to,parts,replacing,text});
-// Toàn bộ lời giải phải bảo toàn khối lượng ở MỌI bước, kể cả lúc thay một nhóm.
-// Khối lượng là đơn vị giả định (không phải khối lượng thực của món đồ).
-const lessons = [
-  {
-    title:'Củ khoai, rau và bắp ngô',
-    intro:'Cùng một củ khoai đổi được 2 bó rau hoặc 4 bắp ngô. Thay củ khoai, rồi CHIA ĐỀU CẢ HAI BÊN thành hai nhóm. Nhìn một nhóm sẽ thấy kết quả.',
-    left:E('🥬'), right:E('🌽'), leftName:'bó rau', rightName:'bắp ngô',leftMass:2,rightMass:1,
-    mass:{'🥔':4,'🥬':2,'🌽':1},
-    facts:[[E('🥔'),E('🥬',2)],[E('🥔'),E('🌽',4)]],
-    steps:[
-      EQ(E('🥔'),E('🥬',2),'Nhìn cân mẫu thứ nhất: 1 củ khoai bằng 2 bó rau.'),
-      EQ(E('🥔'),E('🌽',4),'Nhìn cân mẫu thứ hai: cùng củ khoai ấy bằng 4 bắp ngô.'),
-      EQ(E('🥬',2),E('🌽',4),'Hai bên cùng thay cho một củ khoai: 2 bó rau bằng 4 bắp ngô.'),
-      SPLIT(E('🥬'),E('🌽',2),2,'Chia đều CẢ HAI bên thành 2 nhóm: mỗi nhóm bên trái có 1 bó rau, bên phải có 2 bắp ngô.'),
-      EQ(E('🥬'),E('🌽',2),'Giữ lại một cặp nhóm tương đương: 1 bó rau bằng 2 bắp ngô.')
-    ]
-  },
-  {
-    title:'Bắp cải, cà tím và củ hành',
-    intro:'Từ cân mẫu, 2 củ hành thay được 1 cà tím. Đặt 4 củ hành của bắp cải thành 2 cặp, rồi đổi MỖI cặp thành 1 cà tím, ngay tại vị trí đó.',
-    left:E('🥬'),right:E('🍆'),leftName:'bắp cải',rightName:'quả cà tím',leftMass:4,rightMass:2,
-    mass:{'🍆':2,'🧅':1,'🥬':4},
-    facts:[[E('🍆'),E('🧅',2)],[E('🥬'),E('🧅',4)]],
-    steps:[
-      EQ(E('🍆'),E('🧅',2),'1 cà tím nặng bằng 2 củ hành. Nghĩa là có thể lấy 2 củ hành ra và thay bằng 1 cà tím.'),
-      EQ(E('🥬'),E('🧅',4),'1 bắp cải nặng bằng 4 củ hành.'),
-      GROUP(E('🥬'),E('🧅',2),2,'Đặt 4 củ hành thành 2 cặp: (hành + hành) và (hành + hành). Hai cặp vẫn có tổng khối lượng bằng bắp cải.'),
-      REPLACE(E('🥬'),E('🧅',2),E('🍆'),2,0,'Lấy 2 củ hành của cặp thứ nhất ra, đặt 1 cà tím vào đúng vị trí. Cặp thứ hai vẫn là 2 củ hành.'),
-      REPLACE(E('🥬'),E('🧅',2),E('🍆'),2,1,'Tiếp tục lấy 2 củ hành còn lại ra, đặt thêm 1 cà tím vào. Ta có 2 cà tím thay cho 4 củ hành.'),
-      EQ(E('🥬'),E('🍆',2),'Kết luận: 1 bắp cải bằng 2 cà tím.')
-    ]
-  },
-  {
-    title:'Quả lê, táo và cam',
-    intro:'Cứ 2 quả cam đổi được 1 quả táo. Hãy gom bốn quả cam thành hai cặp, rồi thay từng cặp bằng táo.',
-    left:E('🍐'),right:E('🍎'),leftName:'quả lê',rightName:'quả táo',leftMass:4,rightMass:2,
-    mass:{'🍐':4,'🍊':1,'🍎':2},
-    facts:[[E('🍐'),E('🍊',4)],[E('🍎'),E('🍊',2)]],
-    steps:[
-      EQ(E('🍐'),E('🍊',4),'1 quả lê bằng 4 quả cam.'),
-      EQ(E('🍎'),E('🍊',2),'1 quả táo bằng 2 quả cam. Có thể lấy cặp 2 cam và đặt 1 táo vào.'),
-      GROUP(E('🍐'),E('🍊',2),2,'Chia 4 quả cam thành 2 cặp. Đảm bảo không thêm, không bớt quả nào.'),
-      REPLACE(E('🍐'),E('🍊',2),E('🍎'),2,0,'Lấy cặp 2 cam thứ nhất ra và thay vào đó 1 quả táo.'),
-      REPLACE(E('🍐'),E('🍊',2),E('🍎'),2,1,'Đổi nốt cặp 2 quả cam còn lại thành 1 quả táo thứ hai.'),
-      EQ(E('🍐'),E('🍎',2),'Kết luận: 1 quả lê bằng 2 quả táo.')
-    ]
-  },
-  {
-    title:'Trực thăng, ô tô và máy kéo',
-    intro:'Bài thay hai tầng: một trực thăng bằng 2 ô tô; mỗi ô tô lại đổi được 2 máy kéo. Phải thay TỪNG ô tô, không đổi cả hai ô tô thành một cặp máy kéo.',
-    left:E('🚁'),right:E('🚜'),leftName:'trực thăng',rightName:'máy kéo',leftMass:4,rightMass:1,
-    mass:{'🚁':4,'🚗':2,'🚜':1},
-    facts:[[E('🚁'),E('🚗',2)],[E('🚗'),E('🚜',2)]],
-    steps:[
-      EQ(E('🚁'),E('🚗',2),'1 trực thăng bằng 2 ô tô.'),
-      EQ(E('🚗'),E('🚜',2),'Mỗi ô tô bằng 2 máy kéo. Chú ý: một ô tô đổi thành hai máy kéo.'),
-      GROUP(E('🚁'),E('🚗'),2,'Ta có hai ô tô; để riêng thành hai nhóm, mỗi nhóm một chiếc.'),
-      REPLACE(E('🚁'),E('🚗'),E('🚜',2),2,0,'Nhấc ô tô thứ nhất ra và đặt 2 máy kéo vào vị trí đó. Vẫn còn một ô tô chưa đổi.'),
-      REPLACE(E('🚁'),E('🚗'),E('🚜',2),2,1,'Nhấc ô tô thứ hai ra và đặt tiếp 2 máy kéo vào. Tổng cộng có 4 máy kéo.'),
-      EQ(E('🚁'),E('🚜',4),'Kết luận: 1 trực thăng bằng 4 máy kéo.')
-    ]
-  },
-  {
-    title:'Chia đều ba nhóm',
-    intro:'Ví dụ mở rộng do website tạo, không có nguyên dạng trong PDF. Cùng củ khoai đổi được 3 bó rau hoặc 6 bắp ngô. Tách đều hai bên thành BA nhóm.',
-    left:E('🥬'),right:E('🌽'),leftName:'bó rau',rightName:'bắp ngô',leftMass:2,rightMass:1,
-    mass:{'🥔':6,'🥬':2,'🌽':1},
-    facts:[[E('🥔'),E('🥬',3)],[E('🥔'),E('🌽',6)]],
-    steps:[
-      EQ(E('🥔'),E('🥬',3),'1 củ khoai bằng 3 bó rau.'),
-      EQ(E('🥔'),E('🌽',6),'Cùng 1 củ khoai ấy bằng 6 bắp ngô.'),
-      EQ(E('🥬',3),E('🌽',6),'Vì cùng nặng bằng một củ khoai: 3 bó rau bằng 6 bắp ngô.'),
-      SPLIT(E('🥬'),E('🌽',2),3,'Chia CẢ HAI bên thành 3 nhóm: mỗi nhóm bên trái có 1 bó rau; mỗi nhóm bên phải có 2 bắp ngô.'),
-      EQ(E('🥬'),E('🌽',2),'Chỉ giữ một cặp nhóm tương đương: 1 bó rau bằng 2 bắp ngô.')
-    ]
-  }
-];
-// Mọi cân mẫu, hình gợi ý và đáp án phải được kiểm tra tự động trước khi chạy.
-function auditLessons(){
-  const weight = (l,item) => {
-    if(!item||!Number.isInteger(item.count)||item.count<1||!Number.isFinite(l.mass[item.emoji]))throw Error(`Vật không hợp lệ ở ${l.title}`);
-    return item.count*l.mass[item.emoji];
-  };
-  const equivalentFact = (l,from,to) => l.facts.some(([a,b])=>
-    (a.emoji===from.emoji&&a.count===from.count&&b.emoji===to.emoji&&b.count===to.count) ||
-    (b.emoji===from.emoji&&b.count===from.count&&a.emoji===to.emoji&&a.count===to.count));
-  lessons.forEach((l,i)=>{
-    const answer=l.leftMass/l.rightMass;
-    if(!Number.isInteger(answer)||answer<1||answer>12||weight(l,l.left)!==l.leftMass||weight(l,l.right)!==l.rightMass)
-      throw Error(`Đáp án bài ${i+1} không hợp lệ`);
-    l.facts.forEach(([a,b])=>{if(weight(l,a)!==weight(l,b))throw Error(`Sai cân mẫu bài ${i+1}`)});
-    l.steps.forEach((s,j)=>{
-      let valid=false;
-      if(s.kind==='equation')valid=weight(l,s.left)===weight(l,s.right);
-      if(s.kind==='split')valid=Number.isInteger(s.parts)&&s.parts>1&&weight(l,s.left)===weight(l,s.right);
-      if(s.kind==='group')valid=Number.isInteger(s.parts)&&s.parts>1&&weight(l,s.base)===weight(l,s.group)*s.parts;
-      if(s.kind==='replace')valid=Number.isInteger(s.replacing)&&s.replacing>=0&&s.replacing<s.parts&&
-        weight(l,s.base)===weight(l,s.from)*s.parts&&weight(l,s.from)===weight(l,s.to)&&equivalentFact(l,s.from,s.to);
-      if(!valid)throw Error(`Lỗi bảo toàn khối lượng bài ${i+1}, gợi ý ${j+1}`);
-    });
-    const last=l.steps[l.steps.length-1];
-    if(last.kind!=='equation'||last.left.emoji!==l.left.emoji||last.left.count!==l.left.count||last.right.emoji!==l.right.emoji||last.right.count!==answer)
-      throw Error(`Kết luận bài ${i+1} không khớp đáp án`);
-  });
-}
-auditLessons();
-const $ = id => document.getElementById(id);
-const state = {index:0,placed:0,step:0,hintOpen:false,swapped:new Set(),done:new Set(),solved:false};
-let drag = null;
-const MAX_PIECES=12;
-const lesson = () => lessons[state.index];
-function objects(item){return Array.from({length:item.count},()=>`<span class="object" aria-hidden="true">${item.emoji}</span>`).join('')}
-function equation(left,right){return `<span class="objects">${objects(left)}</span><span class="equal" aria-hidden="true">=</span><span class="objects">${objects(right)}</span>`}
-function scene(step,{animate=true}={}){
-  if(step.kind==='equation')return `<div class="scene-equation">${equation(step.left,step.right)}</div>`;
-  if(step.kind==='split'){
-    const side = (item,type) => `<div class="split-side ${type}" style="--parts:${step.parts}">${Array.from({length:step.parts},(_,i)=>`<div class="split-group ${i===0?'split-focus':''}" style="--group:${i};--shift:${i-(step.parts-1)/2}">${objects(item)}</div>`).join('')}</div>`;
-    return `<div class="scene-split"><div class="split-row">${side(step.left,'left')}<span class="split-symbol">=</span>${side(step.right,'right')}</div></div>`;
-  }
-  if(step.kind==='group'||step.kind==='replace'){
-    const replacing=step.kind==='replace';
-    const groups=Array.from({length:step.parts},(_,i)=>{
-      const finished=replacing&&i<step.replacing;
-      const active=replacing&&i===step.replacing;
-      let content=objects(finished?step.to:(replacing?step.from:step.group));
-      if(active)content=`<span class="swap-slot ${animate?'animate':'static'}"><span class="old-items">${objects(step.from)}</span><span class="new-items">${objects(step.to)}</span></span>`;
-      return `<div class="substitution-group ${finished?'group-finished':''} ${active?'group-current':''}" style="--group:${i};--shift:${i-(step.parts-1)/2}" aria-label="Nhóm ${i+1}">${content}</div>`;
-    }).join('');
-    const legend=replacing?`<div class="swap-legend" aria-label="Thay nhóm tương đương"><span class="objects">${objects(step.from)}</span><span class="swap-arrow">➜</span><span class="objects">${objects(step.to)}</span></div>`:'';
-    return `<div class="scene-replacement">${legend}<div class="group-equation"><span class="base-item">${objects(step.base)}</span><span class="equal">=</span><div class="group-row">${groups}</div></div></div>`;
-  }
-  throw Error(`Loại gợi ý chưa hỗ trợ: ${step.kind}`);
-}
-function renderFact(pair,i){const swapped=state.swapped.has(i);return `<button type="button" class="fact ${swapped?'swapped':''}" data-fact="${i}" aria-label="Phép cân mẫu ${i+1}, chạm để đổi hai bên"><span class="equation">${equation(swapped?pair[1]:pair[0],swapped?pair[0]:pair[1])}</span><span class="swap" aria-hidden="true">↔</span></button>`}
-function renderDots(){$('progress').innerHTML=lessons.map((l,i)=>`<button class="dot ${i===state.index?'active':''} ${state.done.has(i)?'done':''}" type="button" data-level="${i}" aria-label="Bài ${i+1}: ${l.title}" aria-current="${i===state.index?'step':'false'}">${state.done.has(i)?'✓':i+1}</button>`).join('')}
-function renderHint(){const steps=lesson().steps;$('tutorial').hidden=!state.hintOpen;$('hintToggle').setAttribute('aria-expanded',String(state.hintOpen));$('hintCounter').textContent=`${state.step+1} / ${steps.length}`;$('hintScene').innerHTML=scene(steps[state.step],{animate:true});$('prevHint').disabled=state.step===0;$('nextHint').disabled=state.step===steps.length-1}
-function renderParent(){const l=lesson();$('lessonTitle').textContent=`Bài ${state.index+1}: ${l.title}`;$('lessonIntro').textContent=l.intro;$('parentSteps').innerHTML=l.steps.map((s,i)=>`<div class="parent-step"><span class="step-number">${i+1}</span><div><p>${s.text}</p>${scene(s,{animate:false})}</div></div>`).join('')}
-function openLevel(i){finishDrag();$('successPanel').hidden=true;$('checkFeedback').textContent='';state.index=i;state.placed=0;state.step=0;state.hintOpen=false;state.swapped=new Set();state.solved=false;$('feedback').textContent='';$('feedback').className='feedback';
- const l=lesson();$('facts').innerHTML=l.facts.map(renderFact).join('');$('question').innerHTML=equation(l.left,{emoji:l.right.emoji,count:1}).replace(`<span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>` ,`<span class="q-mark" aria-hidden="true">?</span><span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>`);$('question').setAttribute('aria-label',`Một ${l.left.emoji} bằng bao nhiêu ${l.right.emoji}?`);$('piece').textContent=l.right.emoji;$('pieceSource').setAttribute('aria-label',`Chạm để thêm ${l.rightName}, hoặc kéo lên đĩa cân phải`);renderDots();renderHint();renderParent();updateScale()}
-function updateScale(){
-  const l=lesson();const left=l.leftMass,right=state.placed*l.rightMass;
-  const tilt=left===right?0:left>right?-9:9;
-  $('beam').style.setProperty('--tilt',`${tilt}deg`);
-  $('leftPan').innerHTML=objects(l.left);
-  $('rightPan').innerHTML=state.placed
-    ?Array.from({length:state.placed},()=>`<button class="removable" type="button" aria-label="Chạm để bỏ bớt ${l.rightName}, hoặc kéo ra khỏi đĩa"><span class="object" aria-hidden="true">${l.right.emoji}</span></button>`).join('')
-    :'<span class="empty" aria-hidden="true">⇣</span>';
-  $('balanceBadge').textContent=left===right?'⚖️':left>right?'↙️':'↘️';
-  $('balanceBadge').className='balance-badge'+(left===right?' balanced':'');
-  $('pieceSource').disabled=state.solved||state.placed>=MAX_PIECES;
-  $('check').disabled=state.solved||state.placed===0;
-  $('feedback').textContent=left===right?'Hai bên đang cân bằng. Bé có thể bấm Kiểm tra khi sẵn sàng.':left>right?'Đĩa bên trái nặng hơn.':'Đĩa bên phải nặng hơn.';
-}
-function changeCount(delta){
-  if(state.solved)return;
-  state.placed=Math.max(0,Math.min(MAX_PIECES,state.placed+delta));
-  $('checkFeedback').textContent='';
-  updateScale();
-}
-function checkAnswer(){
-  if(state.solved||state.placed===0)return;
-  const l=lesson();
-  if(l.leftMass!==state.placed*l.rightMass){
-    $('checkFeedback').textContent=l.leftMass>state.placed*l.rightMass?'👀 ↙️':'👀 ↘️';
-    $('checkFeedback').setAttribute('aria-label','Chưa cân bằng; con hãy nhìn bên nặng hơn và thử lại nhé.');
-    const b=$('check');b.classList.remove('wobble');void b.offsetWidth;b.classList.add('wobble');
-    return;
-  }
-  state.solved=true;
-  state.done.add(state.index);
-  renderDots();
-  updateScale();
-  $('checkFeedback').textContent='';
-  $('solvedEquation').innerHTML=equation(l.left,{emoji:l.right.emoji,count:state.placed});
-  $('successPanel').hidden=false;
-  $('feedback').textContent='Giỏi lắm! Cả hai đĩa cân bằng nhau. Nhấn mũi tên để chơi bài khác.';
-}
-// Kéo thả bằng Pointer Events: dùng được chuột và cảm ứng, không cần thư viện.
-// Chạm nhanh vào đồ lớn để thêm; chạm nhanh vào đồ trên cân để bớt.
-function pointInTarget(x,y){
-  const r=$('rightPan').getBoundingClientRect();const margin=19;
-  return x>=r.left-margin&&x<=r.right+margin&&y>=r.top-margin&&y<=r.bottom+margin;
-}
-function startDrag(e,kind){
-  if(e.button!==0||state.solved)return;
-  if(kind==='add'&&state.placed>=MAX_PIECES)return;
-  const source=kind==='add'?$('pieceSource'):e.target.closest('.removable');
-  if(!source)return;
-  drag={id:e.pointerId,kind,source,startX:e.clientX,startY:e.clientY,active:false,ghost:null};
-  source.setPointerCapture?.(e.pointerId);
-  e.preventDefault();
-}
-function moveDrag(e){
-  if(!drag||drag.id!==e.pointerId)return;
-  const dist=Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY);
-  if(!drag.active&&dist>9){
-    drag.active=true;
-    const ghost=document.createElement('div');ghost.className='drag-ghost';
-    ghost.textContent=lesson().right.emoji;ghost.setAttribute('aria-hidden','true');document.body.appendChild(ghost);
-    drag.ghost=ghost;drag.source.classList.add('dragging');$('rightPan').classList.add('drop-active');
-  }
-  if(drag.active){
-    drag.ghost.style.left=`${e.clientX}px`;drag.ghost.style.top=`${e.clientY}px`;
-    $('rightPan').classList.toggle('drop-ready',pointInTarget(e.clientX,e.clientY));
-  }
-}
-function finishDrag(){
-  if(!drag)return;
-  drag.ghost?.remove();drag.source.classList.remove('dragging');
-  $('rightPan').classList.remove('drop-active','drop-ready');
-  drag=null;
-}
-function endDrag(e){
-  if(!drag||drag.id!==e.pointerId)return;
-  const wasActive=drag.active,wasKind=drag.kind,overPan=pointInTarget(e.clientX,e.clientY);
-  finishDrag();
-  if(wasKind==='add'&&(!wasActive||overPan))changeCount(1);
-  if(wasKind==='remove'&&(!wasActive||!overPan))changeCount(-1);
-}
-function cancelDrag(){finishDrag()}
-function speak(){if(!('speechSynthesis' in window))return;const l=lesson();try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(`Một ${l.leftName} nặng bằng mấy ${l.rightName}? Con đặt các món bên phải để cân bằng nhé.`);u.lang='vi-VN';u.rate=.83;window.speechSynthesis.speak(u)}catch(e){ /* Thiết bị không có giọng tiếng Việt: chơi bằng hình vẫn hoạt động. */ }}
-function closeParent(){$('parentOverlay').hidden=true;$('parentOpen').focus()}
-$('progress').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(b)openLevel(Number(b.dataset.level))});
-$('facts').addEventListener('click',e=>{const b=e.target.closest('[data-fact]');if(!b)return;const i=Number(b.dataset.fact);state.swapped.has(i)?state.swapped.delete(i):state.swapped.add(i);$('facts').innerHTML=lesson().facts.map(renderFact).join('')});
-$('pieceSource').addEventListener('pointerdown',e=>startDrag(e,'add'));
-$('rightPan').addEventListener('pointerdown',e=>{if(e.target.closest('.removable'))startDrag(e,'remove')});
-document.addEventListener('pointermove',moveDrag);
-document.addEventListener('pointerup',endDrag);
-document.addEventListener('pointercancel',cancelDrag);
-// Click tạo bởi bàn phím (detail=0) vẫn dùng được; pointer đã được xử lý ở trên.
-$('pieceSource').addEventListener('click',e=>{if(!window.PointerEvent||(e.detail===0&&!e.pointerType))changeCount(1)});
-$('rightPan').addEventListener('click',e=>{if((!window.PointerEvent||(e.detail===0&&!e.pointerType))&&e.target.closest('.removable'))changeCount(-1)});
-$('check').addEventListener('click',checkAnswer);
-$('reset').addEventListener('click',()=>openLevel(state.index));
-$('hintToggle').addEventListener('click',()=>{state.hintOpen=!state.hintOpen;state.step=0;renderHint()});
-$('prevHint').addEventListener('click',()=>{state.step=Math.max(0,state.step-1);renderHint()});$('nextHint').addEventListener('click',()=>{state.step=Math.min(lesson().steps.length-1,state.step+1);renderHint()});$('hintReplay').addEventListener('click',()=>renderHint());
-$('speak').addEventListener('click',speak);
-$('parentOpen').addEventListener('click',()=>{$('parentOverlay').hidden=false;$('parentClose').focus()});$('parentClose').addEventListener('click',closeParent);
-$('parentOverlay').addEventListener('click',e=>{if(e.target===$('parentOverlay'))closeParent()});
-$('nextLevel').addEventListener('click',()=>openLevel((state.index+1)%lessons.length));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('parentOverlay').hidden)closeParent()});
-openLevel(0);
-</script>
-</body>
-</html>
+<div id="parentOverlay" class="overlay" hidden><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="parentTitle"><div class="dialog-head"><h2 id="parentTitle">👨‍👩‍👧 Góc bố mẹ</h2><button id="parentClose" class="close" aria-label="Đóng">×</button></div><div class="parent-guide parent-text"><strong>🌼 Cách chơi</strong><p>Bé quan sát các phép bằng nhau phía trên. Với bài cân, kéo hoặc chạm vào món đồ để đặt lên đĩa bên phải; chạm món đã đặt để bớt đi. Cân ngang vẫn đứng yên cho bé quan sát. Chỉ khi con chủ động bấm “✓ Kiểm tra” mới xác nhận.</p><p>Với bài tính giá trị hình, bé chạm một trong ba số rồi bấm “✓ Kiểm tra”. Bóng đèn 💡 cho xem từng bước thay thế và chia đều. Mỗi lượt có tối đa 5 câu; không có giới hạn thời gian.</p></div><h3 id="parentLessonTitle"></h3><div id="parentSourceNote" class="source-note" hidden></div><p id="parentIntro" class="parent-text"></p><div id="parentSteps"></div><div class="parent-foot">Các hình và khối lượng chỉ mang tính minh họa cho toán tư duy. Không sao chép các trang ảnh của sách lên GitHub. Tiến độ chỉ được lưu trên thiết bị của gia đình.</div></section></div>
+<script src="questions.js"></script><script src="logic.js"></script><script src="app.js"></script>
+</body></html>
