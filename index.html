@@ -42,10 +42,34 @@
     .balance-badge{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);border-radius:99px;padding:4px 18px;font-size:26px;background:#fff;border:1px solid #dbe8dd;box-shadow:0 2px 8px #0001;white-space:nowrap}.balance-badge.balanced{background:#e3f8e3}
     .controls{display:flex;align-items:stretch;gap:12px;margin-top:13px}.add{display:flex;align-items:center;justify-content:center;gap:13px;flex:1;background:#ffdf9a;border:2px solid #e9b85d;border-radius:22px;min-height:84px;box-shadow:0 4px 0 #d9ab5a}.add .object{font-size:48px}.add .plus{font-size:35px;font-weight:900;color:#ad6c27}.mini-controls{display:flex;gap:9px}.mini-controls button{background:#f7f9f7;border:1.5px solid #e0e7dd;border-radius:19px;min-width:65px;min-height:76px;font-weight:900;font-size:31px;color:#537368}
     .feedback{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0}
+    /* Chạm hoặc kéo vật lớn lên đĩa phải; không dùng nút +/- trong giao diện bé. */
+    .controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:stretch}
+    .object-source{min-height:122px;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff2cc;border:3px dashed #dfb457;border-radius:24px;box-shadow:0 4px 0 #e3c17e;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;position:relative}
+    .object-source:active{cursor:grabbing}.object-source .object{font-size:clamp(76px,11vw,108px);line-height:1;pointer-events:none}
+    .source-arrow{font-size:39px;color:#ab7949;pointer-events:none;transform:rotate(-34deg)}
+    .control-actions{display:flex;flex-direction:column;gap:9px}.check{background:#168570;color:#fff;border:0;border-radius:21px;min-height:73px;min-width:147px;font-size:20px;font-weight:850;box-shadow:0 5px 0 #086e5c}
+    .check .check-mark{font-size:27px;margin-right:5px}.reset{background:#f6faf6;border:1.5px solid #dfe9e2;border-radius:15px;min-height:42px;font-size:25px;color:#577568}
+    .check.wobble{animation:wobble .44s ease}.pan.drop-active{border-color:#43b78d;background:#e5fff1;box-shadow:0 0 0 6px #9be0bd88,0 5px 0 #cea27b}
+    .pan.drop-ready{border-color:#16986e;background:#d9ffe8;box-shadow:0 0 0 7px #63d99988,0 5px 0 #cea27b}
+    .right-pan-target{border-radius:0 0 25px 25px}.pan .empty{font-size:56px;color:#9cbda9}
+    .pan .removable{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}.pan .removable .object{pointer-events:none}
+    .drag-ghost{position:fixed;left:0;top:0;z-index:50;pointer-events:none;font-size:85px;line-height:1;filter:drop-shadow(0 14px 12px #304f4f44);transform:translate(-50%,-55%) scale(1.12)}
+    .dragging{cursor:grabbing!important}.dragging .object{opacity:.68}
+    .check-feedback{display:flex;align-items:center;justify-content:center;min-height:30px;font-size:27px;margin-top:8px;color:#527c70}
+    .check-feedback:empty{min-height:0;margin:0}
+    .success-panel{border:2px solid #b9e9ca;border-radius:25px;background:#f0fff3;margin-top:13px;padding:15px 12px;text-align:center;animation:appear .35s ease}
+    .success-stars{display:flex;justify-content:center;gap:9px;font-size:22px;line-height:1.1}
+    .success-equation{display:flex;justify-content:center;align-items:center;gap:8px;margin:12px auto;max-width:100%}
+    .success-equation .objects{max-width:245px}.success-equation .object{font-size:clamp(60px,8.5vw,80px);line-height:1.15}.success-equation .equal{font-size:37px}
+    .next{border:0;border-radius:17px;background:var(--green);color:white;font-size:32px;min-width:116px;min-height:56px;box-shadow:0 4px 0 #076e5d}
+    @keyframes wobble{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+    @media(max-width:600px){.controls{grid-template-columns:minmax(0,1fr) 120px;gap:9px}.object-source{min-height:114px;gap:0}.object-source .object{font-size:clamp(72px,18vw,94px)}.source-arrow{font-size:32px}.control-actions{gap:7px}.check{min-width:0;min-height:69px;font-size:16px;border-radius:17px}.reset{min-height:39px}.visual-question .object{font-size:clamp(54px,13vw,72px)}.success-equation .object{font-size:clamp(56px,16vw,74px)}.success-equation .objects{max-width:190px}.success-equation{gap:6px}.pan .removable{min-width:33px;min-height:39px}}
+    @media(max-width:360px){.controls{grid-template-columns:minmax(0,1fr) 107px}.object-source .object{font-size:68px}.source-arrow{font-size:25px}.check{font-size:14px}.success-equation .object{font-size:49px}.success-equation .objects{max-width:154px}}
+
     .overlay{position:fixed;inset:0;background:#173638a8;z-index:20;display:grid;place-items:center;padding:16px;overflow:auto}.dialog{background:#fff;border-radius:29px;box-shadow:0 16px 80px #112a3433;width:min(680px,100%);max-height:min(90vh,900px);overflow:auto;padding:22px}.dialog-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.dialog-header h2{font-size:22px;margin:0}.close{border:1px solid #e0e9e0;background:#f9faf8;border-radius:13px;font-size:25px;width:48px;height:48px}
     .parent-text{font-size:15px;line-height:1.6;color:#415b61}.guide{border:1.5px solid #e4eee3;border-radius:18px;background:#f6faf6;padding:13px 15px;margin:10px 0 19px}.guide p{margin:5px 0}.parent-step{border:1.5px solid #e4e8e1;border-radius:18px;padding:13px;margin:9px 0;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start}.step-number{display:grid;place-items:center;background:#dbf1e8;border-radius:11px;width:32px;height:32px;font-weight:900;color:#136b5b}.parent-step p{margin:0 0 10px;color:#435f62;font-size:14px;line-height:1.55}.parent-step .scene-equation .object{font-size:31px}.parent-step .scene-split .object{font-size:26px}.parent-step .split-group{min-height:60px}.parent-step .scene-equation{justify-content:flex-start}
     .parent-footer{font-size:13px;color:#6b7e82;line-height:1.5;border-top:1px solid #e8eee8;padding-top:12px;margin-top:18px}
-    .success-dialog{text-align:center;width:min(390px,100%);padding:25px}.success-icon{font-size:69px;animation:pop .5s ease}.success-equation{display:flex;align-items:center;justify-content:center;gap:9px;margin:22px 0}.success-equation .object{font-size:43px}.success-equation .equal{font-size:36px}.next{border:0;border-radius:20px;background:var(--green);color:white;font-size:32px;min-width:130px;min-height:65px;box-shadow:0 5px 0 #076e5d}
+    /* Kết quả chỉ hiện sau khi bé chủ động Kiểm tra. */
     footer{text-align:center;color:#8a9895;font-size:12px;margin:22px 0 0}
     @keyframes appear{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:scale(1)}} @keyframes fan-out{from{opacity:.25;transform:translateX(calc(var(--shift) * -22px)) scale(.88)}to{opacity:1;transform:translateX(0) scale(1)}} @keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
     @media(max-width:600px){.app{padding:10px 11px 30px}.logo{font-size:18px}.logo-mark{font-size:24px;padding:8px}.head-controls{gap:6px}.parent-button{font-size:12px;padding:9px 10px}.card{padding:13px;border-radius:22px}.facts{gap:8px}.fact{min-height:112px;border-radius:18px;padding:6px 3px}.fact .object{font-size:clamp(24px,6.2vw,33px)}.fact .equal{font-size:24px}.fact .swap{font-size:17px}.visual-question{min-height:82px}.visual-question .object{font-size:48px}.q-mark{font-size:33px}.scale-board{height:271px}.hanger{width:43%}.hanger.left{left:-2%}.hanger.right{right:-2%}.pan{height:85px;min-height:85px}.pan .object{font-size:clamp(25px,8vw,35px)}.pan .removable{min-width:27px;min-height:31px}.controls{gap:8px}.add{min-height:76px}.mini-controls{gap:6px}.mini-controls button{min-width:55px;min-height:75px}.split-row{grid-template-columns:1fr;gap:5px}.split-symbol{font-size:23px}.split-group{min-height:52px;padding:4px 2px}.split-group .object{font-size:clamp(22px,6.5vw,30px)}.tutorial-scene{min-height:180px}.dialog{padding:16px}.parent-step{padding:10px}}
@@ -79,7 +103,16 @@
         <div class="scale"><div class="post"></div><div class="beam" id="beam"><div class="pivot"></div><div class="hanger left"><div class="rope"></div><div class="pan" id="leftPan" aria-label="Đĩa cân trái"></div></div><div class="hanger right"><div class="rope"></div><div class="pan" id="rightPan" aria-label="Đĩa cân phải, chạm vào vật để bớt"></div></div></div></div>
         <div class="balance-badge" id="balanceBadge" aria-hidden="true">↙️</div>
       </div>
-      <div class="controls"><button id="add" class="add" type="button" aria-label="Thêm một vật lên đĩa cân phải"><span class="object" id="piece" aria-hidden="true">🌽</span><span class="plus" aria-hidden="true">＋</span></button><div class="mini-controls"><button id="remove" type="button" aria-label="Bớt một vật khỏi đĩa phải">−</button><button id="reset" type="button" aria-label="Làm lại">↻</button></div></div>
+      <div class="controls">
+        <button id="pieceSource" class="object-source" type="button" aria-label="Chạm để thêm vật, hoặc kéo lên đĩa bên phải"><span class="object" id="piece" aria-hidden="true">🌽</span><span class="source-arrow" aria-hidden="true">↗</span></button>
+        <div class="control-actions"><button id="check" class="check" type="button" aria-label="Kiểm tra đáp án"><span class="check-mark" aria-hidden="true">✓</span> Kiểm tra</button><button id="reset" class="reset" type="button" aria-label="Chơi lại từ đầu">↻</button></div>
+      </div>
+      <div id="checkFeedback" class="check-feedback" role="status" aria-live="polite"></div>
+      <div id="successPanel" class="success-panel" hidden>
+        <div class="success-stars" aria-label="Ba ngôi sao">⭐ ⭐ ⭐</div>
+        <div id="solvedEquation" class="success-equation"></div>
+        <button type="button" id="nextLevel" class="next" aria-label="Sang bài tiếp theo" title="Sang bài tiếp theo">➜</button>
+      </div>
       <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
     </section>
   </main>
@@ -88,19 +121,14 @@
 <div class="overlay" id="parentOverlay" hidden>
   <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="parentTitle">
     <div class="dialog-header"><h2 id="parentTitle">👨‍👩‍👧 Góc bố mẹ</h2><button class="close" id="parentClose" type="button" aria-label="Đóng">×</button></div>
-    <div class="guide parent-text"><strong>🌼 Cách chơi (dành cho bố mẹ)</strong><p>👀 Cho bé nhìn hai cân mẫu ở trên. 👆 Bé chạm đồ vật để thêm vào cân bên phải. ⚖️ Bé quan sát cân nghiêng hay ngang và tự sửa. 💡 Nếu cần, bấm bóng đèn để xem từng bước bằng hình ảnh. Không giới hạn thời gian hay số lần thử.</p><p>Gợi ý hỏi: “Hai bên có bằng nhau không?”, “Con thay được những món nào?”, “Chúng mình chia đều thành mấy nhóm?”</p></div>
+    <div class="guide parent-text"><strong>🌼 Cách chơi (dành cho bố mẹ)</strong><p>👀 Cho bé nhìn hai cân mẫu ở trên. 👆 Bé kéo đồ vật lớn phía dưới vào đĩa cân bên phải (hoặc chạm để thêm). Có thể chạm vật trên đĩa để bỏ bớt, hoặc kéo vật ra ngoài đĩa. ⚖️ Khi hai đĩa ngang nhau, hãy cho bé ngắm cân một chút, rồi chủ động bấm <strong>✓ Kiểm tra</strong> để xác nhận. Website sẽ không tự hiện kết quả.</p><p>💡 Nếu cần, chạm bóng đèn để xem lần lượt cách thay thế và chia đều bằng hình. Không giới hạn thời gian hay số lần thử. Gợi ý hỏi: “Hai bên có bằng nhau không?”, “Con thay được những món nào?”, “Chúng mình chia đều thành mấy nhóm?”</p></div>
     <h3 id="lessonTitle" style="font-size:17px;margin:10px 0 6px"></h3>
     <p id="lessonIntro" class="parent-text" style="margin:0 0 10px"></p>
     <div id="parentSteps"></div>
     <div class="parent-footer">Hình vẽ chỉ biểu diễn khối lượng giả định để luyện tư duy, không phải cân nặng thật của các món đồ. Bài tập số 5 là ví dụ mở rộng để luyện chia 3 nhóm.</div>
   </section>
 </div>
-<div class="overlay" id="successOverlay" hidden>
-  <section class="dialog success-dialog" role="dialog" aria-modal="true" aria-label="Hoàn thành bài tập">
-    <div class="success-icon" aria-hidden="true">🌟🎉🌟</div><div id="solvedEquation" class="success-equation"></div>
-    <button type="button" id="nextLevel" class="next" aria-label="Sang bài tiếp theo" title="Sang bài tiếp theo">➜</button>
-  </section>
-</div>
+<!-- Kết quả nằm dưới cái cân để bé luôn nhìn thấy sự thăng bằng, không có popup. -->
 <script>
 'use strict';
 // Các bài 1–4 chuyển thể từ PDF “Phương pháp so sánh và thay thế” do phụ huynh cung cấp.
@@ -166,7 +194,9 @@ const lessons = [
   }
 ];
 const $ = id => document.getElementById(id);
-const state = {index:0,placed:0,step:0,hintOpen:false,swapped:new Set(),done:new Set(),solved:false,winTimer:null};
+const state = {index:0,placed:0,step:0,hintOpen:false,swapped:new Set(),done:new Set(),solved:false};
+let drag = null;
+const MAX_PIECES=12;
 const lesson = () => lessons[state.index];
 function objects(item){return Array.from({length:item.count},()=>`<span class="object" aria-hidden="true">${item.emoji}</span>`).join('')}
 function equation(left,right){return `<span class="objects">${objects(left)}</span><span class="equal" aria-hidden="true">=</span><span class="objects">${objects(right)}</span>`}
@@ -179,28 +209,110 @@ function renderFact(pair,i){const swapped=state.swapped.has(i);return `<button t
 function renderDots(){$('progress').innerHTML=lessons.map((l,i)=>`<button class="dot ${i===state.index?'active':''} ${state.done.has(i)?'done':''}" type="button" data-level="${i}" aria-label="Bài ${i+1}: ${l.title}" aria-current="${i===state.index?'step':'false'}">${state.done.has(i)?'✓':i+1}</button>`).join('')}
 function renderHint(){const steps=lesson().steps;$('tutorial').hidden=!state.hintOpen;$('hintToggle').setAttribute('aria-expanded',String(state.hintOpen));$('hintCounter').textContent=`${state.step+1} / ${steps.length}`;$('hintScene').innerHTML=scene(steps[state.step]);$('prevHint').disabled=state.step===0;$('nextHint').disabled=state.step===steps.length-1}
 function renderParent(){const l=lesson();$('lessonTitle').textContent=`Bài ${state.index+1}: ${l.title}`;$('lessonIntro').textContent=l.intro;$('parentSteps').innerHTML=l.steps.map((s,i)=>`<div class="parent-step"><span class="step-number">${i+1}</span><div><p>${s.text}</p>${scene(s)}</div></div>`).join('')}
-function clearWin(){if(state.winTimer){clearTimeout(state.winTimer);state.winTimer=null}}
-function openLevel(i){clearWin();$('successOverlay').hidden=true;state.index=i;state.placed=0;state.step=0;state.hintOpen=false;state.swapped=new Set();state.solved=false;$('feedback').textContent='';$('feedback').className='feedback';
- const l=lesson();$('facts').innerHTML=l.facts.map(renderFact).join('');$('question').innerHTML=equation(l.left,{emoji:l.right.emoji,count:1}).replace(`<span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>` ,`<span class="q-mark" aria-hidden="true">?</span><span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>`);$('question').setAttribute('aria-label',`Một ${l.left.emoji} bằng bao nhiêu ${l.right.emoji}?`);$('piece').textContent=l.right.emoji;$('add').setAttribute('aria-label',`Thêm một ${l.right.emoji} lên đĩa cân phải`);renderDots();renderHint();renderParent();updateScale()}
-function updateScale(){const l=lesson();const left=l.leftMass,right=state.placed*l.rightMass,tilt=left===right?0:left>right?-9:9;$('beam').style.setProperty('--tilt',`${tilt}deg`);$('leftPan').innerHTML=objects(l.left);$('rightPan').innerHTML=state.placed?Array.from({length:state.placed},()=>`<button class="removable" type="button" aria-label="Bớt một ${l.right.emoji}"><span class="object" aria-hidden="true">${l.right.emoji}</span></button>`).join(''):'<span class="empty" aria-hidden="true">＋</span>';
- $('balanceBadge').textContent=left===right?'⚖️ ✨':left>right?'↙️':'↘️';$('balanceBadge').className='balance-badge'+(left===right?' balanced':'');$('remove').disabled=state.placed===0||state.solved;$('add').disabled=state.solved||state.placed>=12;
- $('feedback').textContent=left===right?'Hai đĩa cân bằng nhau!':left>right?'Đĩa bên trái nặng hơn.':'Đĩa bên phải nặng hơn.';
- if(left===right&&!state.solved){state.solved=true;state.done.add(state.index);renderDots();state.winTimer=setTimeout(()=>{if(!state.solved)return;$('solvedEquation').innerHTML=equation(l.left,{emoji:l.right.emoji,count:state.placed});$('successOverlay').hidden=false;$('nextLevel').focus();state.winTimer=null;},680)}
+function openLevel(i){finishDrag();$('successPanel').hidden=true;$('checkFeedback').textContent='';state.index=i;state.placed=0;state.step=0;state.hintOpen=false;state.swapped=new Set();state.solved=false;$('feedback').textContent='';$('feedback').className='feedback';
+ const l=lesson();$('facts').innerHTML=l.facts.map(renderFact).join('');$('question').innerHTML=equation(l.left,{emoji:l.right.emoji,count:1}).replace(`<span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>` ,`<span class="q-mark" aria-hidden="true">?</span><span class="objects">${objects({emoji:l.right.emoji,count:1})}</span>`);$('question').setAttribute('aria-label',`Một ${l.left.emoji} bằng bao nhiêu ${l.right.emoji}?`);$('piece').textContent=l.right.emoji;$('pieceSource').setAttribute('aria-label',`Chạm để thêm ${l.rightName}, hoặc kéo lên đĩa cân phải`);renderDots();renderHint();renderParent();updateScale()}
+function updateScale(){
+  const l=lesson();const left=l.leftMass,right=state.placed*l.rightMass;
+  const tilt=left===right?0:left>right?-9:9;
+  $('beam').style.setProperty('--tilt',`${tilt}deg`);
+  $('leftPan').innerHTML=objects(l.left);
+  $('rightPan').innerHTML=state.placed
+    ?Array.from({length:state.placed},()=>`<button class="removable" type="button" aria-label="Chạm để bỏ bớt ${l.rightName}, hoặc kéo ra khỏi đĩa"><span class="object" aria-hidden="true">${l.right.emoji}</span></button>`).join('')
+    :'<span class="empty" aria-hidden="true">⇣</span>';
+  $('balanceBadge').textContent=left===right?'⚖️':left>right?'↙️':'↘️';
+  $('balanceBadge').className='balance-badge'+(left===right?' balanced':'');
+  $('pieceSource').disabled=state.solved||state.placed>=MAX_PIECES;
+  $('check').disabled=state.solved||state.placed===0;
+  $('feedback').textContent=left===right?'Hai bên đang cân bằng. Bé có thể bấm Kiểm tra khi sẵn sàng.':left>right?'Đĩa bên trái nặng hơn.':'Đĩa bên phải nặng hơn.';
 }
-function changeCount(delta){if(state.solved)return;clearWin();state.placed=Math.max(0,Math.min(12,state.placed+delta));updateScale()}
+function changeCount(delta){
+  if(state.solved)return;
+  state.placed=Math.max(0,Math.min(MAX_PIECES,state.placed+delta));
+  $('checkFeedback').textContent='';
+  updateScale();
+}
+function checkAnswer(){
+  if(state.solved||state.placed===0)return;
+  const l=lesson();
+  if(l.leftMass!==state.placed*l.rightMass){
+    $('checkFeedback').textContent=l.leftMass>state.placed*l.rightMass?'👀 ↙️':'👀 ↘️';
+    $('checkFeedback').setAttribute('aria-label','Chưa cân bằng; con hãy nhìn bên nặng hơn và thử lại nhé.');
+    const b=$('check');b.classList.remove('wobble');void b.offsetWidth;b.classList.add('wobble');
+    return;
+  }
+  state.solved=true;
+  state.done.add(state.index);
+  renderDots();
+  updateScale();
+  $('checkFeedback').textContent='';
+  $('solvedEquation').innerHTML=equation(l.left,{emoji:l.right.emoji,count:state.placed});
+  $('successPanel').hidden=false;
+  $('feedback').textContent='Giỏi lắm! Cả hai đĩa cân bằng nhau. Nhấn mũi tên để chơi bài khác.';
+}
+// Kéo thả bằng Pointer Events: dùng được chuột và cảm ứng, không cần thư viện.
+// Chạm nhanh vào đồ lớn để thêm; chạm nhanh vào đồ trên cân để bớt.
+function pointInTarget(x,y){
+  const r=$('rightPan').getBoundingClientRect();const margin=19;
+  return x>=r.left-margin&&x<=r.right+margin&&y>=r.top-margin&&y<=r.bottom+margin;
+}
+function startDrag(e,kind){
+  if(e.button!==0||state.solved)return;
+  if(kind==='add'&&state.placed>=MAX_PIECES)return;
+  const source=kind==='add'?$('pieceSource'):e.target.closest('.removable');
+  if(!source)return;
+  drag={id:e.pointerId,kind,source,startX:e.clientX,startY:e.clientY,active:false,ghost:null};
+  source.setPointerCapture?.(e.pointerId);
+  e.preventDefault();
+}
+function moveDrag(e){
+  if(!drag||drag.id!==e.pointerId)return;
+  const dist=Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY);
+  if(!drag.active&&dist>9){
+    drag.active=true;
+    const ghost=document.createElement('div');ghost.className='drag-ghost';
+    ghost.textContent=lesson().right.emoji;ghost.setAttribute('aria-hidden','true');document.body.appendChild(ghost);
+    drag.ghost=ghost;drag.source.classList.add('dragging');$('rightPan').classList.add('drop-active');
+  }
+  if(drag.active){
+    drag.ghost.style.left=`${e.clientX}px`;drag.ghost.style.top=`${e.clientY}px`;
+    $('rightPan').classList.toggle('drop-ready',pointInTarget(e.clientX,e.clientY));
+  }
+}
+function finishDrag(){
+  if(!drag)return;
+  drag.ghost?.remove();drag.source.classList.remove('dragging');
+  $('rightPan').classList.remove('drop-active','drop-ready');
+  drag=null;
+}
+function endDrag(e){
+  if(!drag||drag.id!==e.pointerId)return;
+  const wasActive=drag.active,wasKind=drag.kind,overPan=pointInTarget(e.clientX,e.clientY);
+  finishDrag();
+  if(wasKind==='add'&&(!wasActive||overPan))changeCount(1);
+  if(wasKind==='remove'&&(!wasActive||!overPan))changeCount(-1);
+}
+function cancelDrag(){finishDrag()}
 function speak(){if(!('speechSynthesis' in window))return;const l=lesson();try{window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(`Một ${l.leftName} nặng bằng mấy ${l.rightName}? Con đặt các món bên phải để cân bằng nhé.`);u.lang='vi-VN';u.rate=.83;window.speechSynthesis.speak(u)}catch(e){ /* Thiết bị không có giọng tiếng Việt: chơi bằng hình vẫn hoạt động. */ }}
 function closeParent(){$('parentOverlay').hidden=true;$('parentOpen').focus()}
 $('progress').addEventListener('click',e=>{const b=e.target.closest('[data-level]');if(b)openLevel(Number(b.dataset.level))});
 $('facts').addEventListener('click',e=>{const b=e.target.closest('[data-fact]');if(!b)return;const i=Number(b.dataset.fact);state.swapped.has(i)?state.swapped.delete(i):state.swapped.add(i);$('facts').innerHTML=lesson().facts.map(renderFact).join('')});
-$('add').addEventListener('click',()=>changeCount(1));$('remove').addEventListener('click',()=>changeCount(-1));$('reset').addEventListener('click',()=>openLevel(state.index));
-$('rightPan').addEventListener('click',e=>{if(e.target.closest('.removable'))changeCount(-1)});
+$('pieceSource').addEventListener('pointerdown',e=>startDrag(e,'add'));
+$('rightPan').addEventListener('pointerdown',e=>{if(e.target.closest('.removable'))startDrag(e,'remove')});
+document.addEventListener('pointermove',moveDrag);
+document.addEventListener('pointerup',endDrag);
+document.addEventListener('pointercancel',cancelDrag);
+// Click tạo bởi bàn phím (detail=0) vẫn dùng được; pointer đã được xử lý ở trên.
+$('pieceSource').addEventListener('click',e=>{if(!window.PointerEvent||(e.detail===0&&!e.pointerType))changeCount(1)});
+$('rightPan').addEventListener('click',e=>{if((!window.PointerEvent||(e.detail===0&&!e.pointerType))&&e.target.closest('.removable'))changeCount(-1)});
+$('check').addEventListener('click',checkAnswer);
+$('reset').addEventListener('click',()=>openLevel(state.index));
 $('hintToggle').addEventListener('click',()=>{state.hintOpen=!state.hintOpen;state.step=0;renderHint()});
 $('prevHint').addEventListener('click',()=>{state.step=Math.max(0,state.step-1);renderHint()});$('nextHint').addEventListener('click',()=>{state.step=Math.min(lesson().steps.length-1,state.step+1);renderHint()});
 $('speak').addEventListener('click',speak);
 $('parentOpen').addEventListener('click',()=>{$('parentOverlay').hidden=false;$('parentClose').focus()});$('parentClose').addEventListener('click',closeParent);
 $('parentOverlay').addEventListener('click',e=>{if(e.target===$('parentOverlay'))closeParent()});
 $('nextLevel').addEventListener('click',()=>openLevel((state.index+1)%lessons.length));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('parentOverlay').hidden)closeParent();else if(!$('successOverlay').hidden){$('successOverlay').hidden=true;$('add').focus()}}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('parentOverlay').hidden)closeParent()});
 openLevel(0);
 </script>
 </body>
