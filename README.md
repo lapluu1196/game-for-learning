@@ -1,58 +1,74 @@
-# ⚖️ Cân vui – học so sánh và thay thế
+# ⚖️ Cân vui – 52 câu toán tư duy, mỗi lượt 5 câu
 
-Game HTML tĩnh, thiết kế cho bé 5–6 tuổi **chưa biết đọc**. Mục tiêu là hiểu rằng hai nhóm có cùng khối lượng giả định thì có thể thay thế cho nhau, sau đó chia hai bên thành **2 hoặc 3 nhóm bằng nhau**.
+Ứng dụng HTML/CSS/JavaScript thuần, dành cho bé 5–6 tuổi chưa đọc thành thạo. Chuyển thể **toàn bộ 52 câu hỏi** trong 17 trang PDF “Phương pháp so sánh và thay thế” mà gia đình cung cấp, theo đúng thứ tự trang. **Không đưa ảnh trang sách lên GitHub**, chỉ dùng hình minh họa emoji/SVG.
 
-## Chơi thử
+## Chương trình
 
-- Trực tiếp: mở `index.html` bằng trình duyệt.
-- Trong mạng nhà: chạy `python3 -m http.server 8080 --bind 0.0.0.0` trong thư mục này, rồi mở `http://IP-SERVER:8080/`.
-- GitHub Pages (miễn phí với repo **public**): vào **Settings → Pages → Build and deployment → Deploy from a branch**, chọn nhánh `main`, thư mục `/(root)` và **Save**. Khi đã xuất bản, địa chỉ dự kiến là <https://lapluu1196.github.io/game-for-learning/>. Không cần build hay GitHub Actions.
+| Trang trong PDF | Trang in | Nội dung | Số câu |
+|---|---|---|---:|
+| 1 | 35 | Bắp cải – cà tím – củ hành | 4 |
+| 2 | 36 | Khoai – rau – ngô | 4 |
+| 3 | 37 | Trực thăng – ô tô – máy kéo | 4 |
+| 4 | 38 | Xe tải – ô tô – xe máy | 4 |
+| 5 | 39 | Lê – táo – cam | 4 |
+| 6 | 40 | Ve sầu – ong – kiến | 4 |
+| 7 | 41 | Xoài – chuối – dâu | 5 |
+| 8 | 42 | Cam – kem – bánh vòng (xem chú ý nguồn) | 5 |
+| 9–17 | 43–51 | Tìm giá trị đồ vật qua phép cộng, phép trừ, chia đều | 18 |
+| **Tổng** | | | **52** |
 
-> GitHub Pages là website **công khai**, không phải môi trường riêng tư nội bộ. Không đưa thông tin cá nhân của bé, ảnh riêng, hoặc tài liệu gia đình lên repo.
+Chia theo thứ tự đề gốc thành **11 lượt**: 10 lượt có 5 câu, lượt cuối 2 câu. Có nút ‹/› chuyển lượt và 5 chấm chọn câu. Tiến độ đánh dấu đã học được lưu bằng `localStorage` **chỉ trên thiết bị đang dùng** (không tải dữ liệu lên máy chủ).
 
-## Cách sử dụng
+## Hai cách chơi
 
-- **👀**: hai cân mẫu. Chạm để đảo vị trí hai bên và nhìn chúng vẫn bằng nhau.
-- **🎯**: câu hỏi chỉ có hình `🥬 = ? 🌽`.
-- **🌽 ↗**: kéo bắp ngô lớn lên đĩa cân bên phải bằng ngón tay hoặc chuột. Chạm vào hình lớn để thêm nhanh. Chạm vật trên cân để bớt; hoặc kéo nó ra khỏi đĩa. `↻` làm lại. Không có nút cộng/trừ.
-- **✓ Kiểm tra**: sau khi thả các vật, cân sẽ nghiêng hoặc ngang tương ứng; **KHÔNG** tự hiện kết quả khi cân ngang. Chỉ khi bé chủ động bấm **Kiểm tra** mới xác nhận. Nếu chưa đúng, vẫn được thử lại tự do và được gợi ý nhìn đĩa nặng hơn.
-- **💡**: gợi ý bằng hình theo từng bước. Với bài bắp cải/cà tím, lê/táo và trực thăng/máy kéo: **gom thành từng cặp → lấy nhóm vật cũ ra → đặt vật mới tương đương ngay vào vị trí đó → lặp lại nhóm tiếp theo**. Hai bài củ khoai dùng cách **chia đều hai phía thành 2 hoặc 3 nhóm**. Bấm **›** để xem từng bước, **↻** trong phần gợi ý để xem lại hiệu ứng thay thế.
-- **👨‍👩‍👧 Bố mẹ**: hướng dẫn và giải thích đầy đủ **bằng hình + lời nói** cho từng bài.
-- **🔊**: đọc câu hỏi bằng giọng đọc hệ thống (nếu trình duyệt có giọng tiếng Việt).
-- Khi **Kiểm tra** đúng, ba ngôi sao nhỏ ⭐⭐⭐ và đáp án **bằng hình rất lớn** hiện dưới cái cân, **không dùng popup che mất cân**. Bé quyết định khi nào bấm mũi tên sang bài sau. Không chấm điểm, không đồng hồ, không yêu cầu biết chữ.
+**34 câu cân/thay thế:** nhìn hai cân mẫu → nhìn câu hỏi dạng hình `🥬 = ? 🍆` → kéo/chạm vật vào đĩa phải → cân nghiêng/ngang trực tiếp → bé **chủ động** bấm **✓ Kiểm tra**. Chạm vật đã đặt hoặc kéo ra khỏi đĩa để bớt. Không có popup che cân.
 
-## Nội dung
+**18 câu tìm số:** nhìn các phép tính mẫu bằng hình → chọn một trong ba số lớn → bấm **✓ Kiểm tra**. Dữ kiện gồm cả phép trừ, bài toán hai hoặc ba loại hình; gợi ý làm rõ cách thay giá trị hình đã biết và tách số thành các nhóm bằng nhau.
 
-1. **Rau và ngô, chia đôi** (PDF trang ảnh 2): 🥔 = 2🥬 và 🥔 = 4🌽 → 2🥬 = 4🌽 → chia 2 nhóm → 🥬 = 2🌽.
-2. **Bắp cải và cà tím** (PDF trang ảnh 1): 🍆 = 2🧅 và 🥬 = 4🧅 → 🥬 = (🧅🧅) + (🧅🧅) → 🥬 = 🍆 + (🧅🧅) → 🥬 = 🍆🍆.
-3. **Lê và táo** (PDF trang ảnh 5): 🍐 = 4🍊 và 🍎 = 2🍊 → 🍐 = (🍊🍊) + (🍊🍊) → 🍐 = 🍎 + (🍊🍊) → 🍐 = 🍎🍎.
-4. **Trực thăng** (PDF trang ảnh 3): 🚁 = 2🚗 và 🚗 = 2🚜 → 🚁 = 🚗 + 🚗 → 🚁 = 🚜🚜 + 🚗 → 🚁 = 🚜🚜 + 🚜🚜 = 4🚜.
-5. **Luyện thêm chia ba** (ví dụ tự xây dựng, không lấy nguyên từ PDF): 🥔 = 3🥬 và 🥔 = 6🌽 → 3🥬 = 6🌽 → chia 3 nhóm → 🥬 = 2🌽.
+**💡 Gợi ý bằng hình:** từng phép cân mẫu → gom nhóm → bỏ vật cũ/đặt vật tương đương → chia đều khi cần → kết quả. Có nút lùi, tiến và phát lại chuyển động. Không yêu cầu bé đọc văn bản.
 
-Chỉ có năm bài mẫu để kiểm chứng cách học; emoji có thể hiển thị khác nhau trên iOS/Android/Windows. Về sau có thể thay emoji bằng hình minh họa riêng và tách ngân hàng bài ra JSON.
+**👨‍👩‍👧 Bố mẹ:** lời nói gợi ý, từng bước minh họa và ghi chú tài liệu gốc. **🔊** đọc câu hỏi qua giọng của trình duyệt (nếu có giọng tiếng Việt).
 
-## Rà soát bài học / đảm bảo đúng về toán
+## ⚠️ Bất nhất ở trang in 42 (trang 8 của PDF)
 
-Trong mã nguồn, mỗi bài có bảng khối lượng giả định `mass` và được chạy qua hàm `auditLessons()` khi tải trang. Hàm kiểm tra:
+Ở hình cân giữa, bản scan có vẻ thể hiện **7 chiếc bánh vòng (4 bên trái + 3 bên phải)** tương ứng **2 quả cam**. Tuy nhiên các câu tìm “1 cam = mấy bánh vòng / mấy ly kem?” đòi một kết quả nguyên; nếu đúng 7 bánh thì sẽ phát sinh 3,5 bánh và 1,75 ly kem. Vì vậy, trong website hiện **giả định 2 quả cam = 8 chiếc bánh vòng** (để có thể luyện theo định dạng lớp 1), và **ghi rõ đây chỉ là giả định** trong bảng “Bố mẹ” của cả 5 câu trang 42. Đề gốc không được chỉnh sửa. Gia đình nên đối chiếu với bản in gốc để xác nhận trước khi cho bé học phần này.
 
-- Hai bên của **mọi cân mẫu** và **mọi bước gợi ý** có tổng khối lượng bằng nhau.
-- Mỗi thao tác thay nhóm có khối lượng cũ = khối lượng mới, **và phải dựa vào một cân mẫu có thật của bài**. Kết luận cuối cùng khớp câu hỏi.
-- Bài 1 và 5 chia đều **cả hai bên**; bài 2–4 thay **từng nhóm** chứ không nhảy thẳng tới đáp án. Không đổi 2 chiếc ô tô thành 2 máy kéo: mỗi ô tô mới đổi được 2 máy kéo.
+Nếu muốn bám đúng hình scan là 7, cần thiết kế lại cách trả lời bằng phân số hoặc loại các câu cam khỏi lượt học ở độ tuổi này; không nên giấu sai khác.
 
-Số bước: bài 1 có 5 bước, bài 2–4 có 6 bước, bài 5 có 5 bước. Bài 5 là bài **mở rộng**, không chép nguyên từ PDF.
+## Chạy thử tại nhà
 
-## Kỹ thuật / riêng tư
+```bash
+# trong thư mục tải về (có index.html, questions.js, logic.js, app.js)
+python3 -m http.server 8080 --bind 0.0.0.0
+```
 
-Không phụ thuộc thư viện, tài khoản, cookie, localStorage hay API ngoài. Không thu thập kết quả chơi hoặc dữ liệu của bé. Không tải hình ảnh/âm thanh ngoài. Có nhãn truy cập cho nút và tôn trọng `prefers-reduced-motion`.
+Trên máy tính đang chạy: `http://localhost:8080/`. Trên điện thoại cùng Wi‑Fi: `http://<IP-máy-chủ>:8080/`. Không cần Node, npm, backend, tài khoản hay kết nối mạng ngoài.
 
-## Kiểm thử nhanh
+## GitHub Pages miễn phí
 
-- Bài 1, 2, 3, 5: kéo/chạm thêm 2 vật → cân ngang nhưng **chưa hoàn thành**. Đợi bao lâu tùy thích, bấm **Kiểm tra** mới hiện 3 sao.
-- Bài 4: thêm 4 máy kéo → cân ngang, sau đó **Kiểm tra**.
-- Đặt 1 vật rồi bấm Kiểm tra: kết quả chưa đúng, không hiện sao, có thể thêm tiếp. Đặt quá nhiều: đĩa phải nặng hơn, vẫn sửa được.
-- Thử kéo thả bằng chuột, chạm trên màn hình điện thoại, kéo vật ra khỏi đĩa, chạm vật để bớt.
-- Kiểm tra tự động với `python test_smoke.py` (Playwright và Chromium): 320 px, 390 px, desktop và chạm trên mobile.
-- Mở 💡 và bấm `›` tới màn chia nhóm: bài 1 có 2 nhóm, bài 5 có 3 nhóm.
-- Mở 👨‍👩‍👧 Bố mẹ để xem 5 hoặc 6 bước giải bằng hình và lời; đóng sẽ trả về bài.
-- Bấm 💡 đến từng cặp thay thế: bấm **›**, quan sát hình cũ nhấc ra và hình mới đi vào; bấm **↻** để phát lại. Bài 2: 🧅🧅 → 🍆 hai lần. Bài 3: 🍊🍊 → 🍎 hai lần. Bài 4: 🚗 → 🚜🚜 hai lần.
-- Kiểm thử mọi bước tự động: `python tests/test_hints.py` (cần Playwright và Chromium), trên desktop và mobile 390 px và 320 px.
+Repo hiện tại: https://github.com/lapluu1196/game-for-learning
+
+Trong **Settings → Pages**, chọn **Deploy from a branch**, **main** → **/(root)** → **Save**. Khi xuất bản xong, địa chỉ dự kiến: https://lapluu1196.github.io/game-for-learning/.
+
+> ⚠️ Repo public và GitHub Pages đều công khai. Đừng đẩy lên ảnh riêng, tên, điểm số hoặc dữ liệu cá nhân của bé.
+
+## Cấu trúc mã nguồn
+
+- `index.html`: giao diện và CSS, không thư viện bên ngoài.
+- `questions.js`: ngân hàng 52 câu, trang nguồn, dữ kiện, đáp án, cảnh báo bất nhất.
+- `logic.js`: giải từng bước bằng phép thay thế thật, tìm đường đổi vật, nhóm/chia đều, suy luận giá trị hình và kiểm định đáp án.
+- `app.js`: điều khiển lượt, tương tác kéo thả/cảm ứng, giọng đọc, gợi ý, cửa sổ bố mẹ, lưu tiến độ cục bộ.
+- `tests/test_bank.js`: kiểm thử 52 đáp án, cân mẫu, đường thay thế, 17 trang nguồn và 328 bước gợi ý.
+- `tests/test_browser_fast.py`: kiểm thử Chromium đủ 52 câu & 328 gợi ý ở 1280/390/320 px.
+- `tests/test_interactions.py`: kiểm thử kéo, chạm, kiểm tra thủ công, phép tính đúng/sai, phát lại thay thế.
+
+Chạy nhanh:
+
+```bash
+node tests/test_bank.js
+# tùy chọn kiểm thử giao diện (cần pip install playwright, đã cài Chromium)
+python tests/test_browser_fast.py
+python tests/test_interactions.py
+```
+
+Khi bổ sung câu hỏi về sau, giữ thứ tự trang PDF, ghi nguồn trong `questions.js` và chạy kiểm thử trước khi phát hành.
