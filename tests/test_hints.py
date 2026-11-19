@@ -59,7 +59,7 @@ with sync_playwright() as playwright:
             page.locator("#check").click()
             assert page.locator("#successPanel").is_visible()
             assert not errors,errors
-        print(f"{width}px: all five solutions + 27 steps PASS")
+        print(f"{width}px: all five solutions + 28 steps PASS")
         page.close()
 
     page=browser.new_page(viewport={"width":390,"height":844})
