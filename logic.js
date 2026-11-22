@@ -2,7 +2,7 @@
 (function(root){
 'use strict';
 const BANK=root.GameBank||(typeof require!=='undefined'?require('./questions.js'):null);
-const {questions,items}=BANK;
+const {questions,items,mainQuestions,extraQuestions,ROUND_SIZE}=BANK;
 const same=(a,b)=>Object.keys(a).length===Object.keys(b).length&&Object.keys(a).every(k=>a[k]===b[k]);
 const counts=(id,n)=>({[id]:n});
 const copy=(s)=>({...s});
@@ -132,7 +132,22 @@ function audit(){
   const out=derive(q);if(!out.steps.length)throw Error('Thiếu gợi ý '+q.id);
  }
  if(questions.filter(q=>q.kind==='weight').length!==34||questions.filter(q=>q.kind==='math').length!==18)throw Error('Sai số câu theo dạng');
- return {count:questions.length,weight:34,math:18,rounds:Math.ceil(questions.length/5),hints:questions.map(q=>derive(q).steps.length).reduce((a,b)=>a+b,0)};
+ if(mainQuestions.length!==26||extraQuestions.length!==26)throw Error('Sai phân bổ bài chính / luyện thêm');
+ const expected=[
+  ['cabbage',1,'eggplant',2],['bokchoy',1,'corn',2],
+  ['tractor',2,'car',1],['truck',1,'scooter',4],
+  ['apple',2,'pear',1],['cicada',2,'ant',8],
+  ['banana',1,'strawberry',2],['orange',1,'sundae',2]
+ ];
+ for(let page=1;page<=8;page++){
+  const q=mainQuestions[page-1], [left,n,right,answer]=expected[page-1];
+  if(q.sourcePage!==page||q.kind!=='weight'||q.left!==left||q.leftCount!==n||q.right!==right||q.answer!==answer)
+   throw Error(`Câu chính trang in ${page+34} không khớp dòng cuối PDF`);
+ }
+ if(mainQuestions.slice(8).some(q=>q.kind!=='math'))throw Error('Thiếu bài tìm số trong bộ chính');
+ return {count:questions.length,weight:34,math:18,main:26,extra:26,
+  rounds:Math.ceil(mainQuestions.length/ROUND_SIZE),extraRounds:Math.ceil(extraQuestions.length/ROUND_SIZE),
+  hints:questions.map(q=>derive(q).steps.length).reduce((a,b)=>a+b,0)};
 }
 const exported={derive,deriveWeight,deriveMath,massMap,audit,searchPath,counts,key,stateMass};
 root.GameLogic=exported;if(typeof module!=='undefined'&&module.exports)module.exports=exported;
