@@ -74,18 +74,26 @@ const mathPages=[
 ];
 function normalizeEquation(row){const a=row.slice(0,-1);return {terms:a,sum:row[row.length-1]}}
 const questions=[];
-for(const page of weightPages)for(const q of page.questions){
- const [left,leftCount,right,answer]=q;
- questions.push({id:`p${page.p}-q${questions.filter(x=>x.sourcePage===page.p).length+1}`,
+for(const page of weightPages)for(let j=0;j<page.questions.length;j++){
+ const [left,leftCount,right,answer]=page.questions[j];
+ // Trong PDF: các dòng đầu giúp bé suy luận; dòng CUỐI cùng là câu đích tổng hợp.
+ const isMain=j===page.questions.length-1;
+ questions.push({id:`p${page.p}-q${j+1}`,
   kind:'weight',sourcePage:page.p,printedPage:page.p+34,title:page.title,
+  sourceRow:j+1,isMain,
   rules:page.rules,left,leftCount,right,answer,sourceWarning:page.sourceWarning||null});
 }
 for(const page of mathPages)for(let j=0;j<page.puzzles.length;j++){
  const z=page.puzzles[j];
  questions.push({id:`p${page.p}-q${j+1}`,kind:'math',sourcePage:page.p,printedPage:page.p+34,
- title:z.title,eq:z.eq.map(normalizeEquation),target:z.target,answer:z.answer,note:z.note||null});
+ title:z.title,sourceRow:j+1,isMain:true,eq:z.eq.map(normalizeEquation),target:z.target,answer:z.answer,note:z.note||null});
 }
-const output={items,weightPages,mathPages,questions,ROUND_SIZE:5,ROUND_COUNT:Math.ceil(questions.length/5)};
+// 8 câu tổng hợp ở cuối mỗi trang cân + 18 bài tìm số = 26 bài chính.
+// 26 dòng "Nặng bằng ..." còn lại được giữ ở chế độ Luyện thêm (chỉ bố mẹ bật).
+const mainQuestions=questions.filter(q=>q.isMain);
+const extraQuestions=questions.filter(q=>!q.isMain);
+const output={items,weightPages,mathPages,questions,mainQuestions,extraQuestions,ROUND_SIZE:5,
+ ROUND_COUNT:Math.ceil(mainQuestions.length/5),MAIN_COUNT:mainQuestions.length,EXTRA_COUNT:extraQuestions.length};
 root.GameBank=output;
 if(typeof module!=='undefined'&&module.exports)module.exports=output;
 })(typeof globalThis!=='undefined'?globalThis:this);
